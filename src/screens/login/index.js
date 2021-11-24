@@ -1,9 +1,17 @@
-import React from 'react';
-import { Text } from "react-native";
+import React, {useContext} from 'react';
+import { Button, Text, View } from "react-native";
+import AuthContext from '../../contexts/auth';
 
 function Login(params) {
+    const { logged } = useContext(AuthContext);
+
+    console.log(logged);
+
     return(
-        <Text>Tela de Login!</Text>
+        <View style={{flex: 1, justifyContent: 'center',}}>
+            <Text>Tela de Login</Text>
+            <Button title="login" onPress={() =>{}} />
+        </View>
     )
 }
 
