@@ -18,15 +18,18 @@ export const LoginContainer = styled.View`
 
 export const ImageSection = styled.View`
   display: flex;
-  justify-content: center;
+  justify-content: end;
   align-items: center;
   background: ${bgAzul};
-  height: 50vh;
+  gap: 1rem;
+  height: 60vh;
   width: 100%;
 `;
 
 export const LoginImage = styled.Image`
-  width: 50%;
+  width: 12rem;
+  height: 12rem;
+  padding: 1rem 0;
 `;
 
 export const LogoWrap = styled.View`
@@ -34,19 +37,19 @@ export const LogoWrap = styled.View`
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  gap: 1rem;
+  gap: 0.5rem;
 `;
 
 export const Title = styled.Text`
   font-family: "ExtraBold";
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 800;
   color: ${txBranco};
 `;
 
 export const LogoIcon = styled(Icon)`
   font-family: "ExtraBold";
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 800;
   color: ${txBranco};
 `;

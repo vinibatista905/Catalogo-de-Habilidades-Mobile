@@ -34,7 +34,7 @@ export const LogoWrap = styled.View`
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  gap: 1rem;
+  gap: 0.5rem;
 `;
 
 export const Title = styled.Text`

@@ -22,6 +22,7 @@ import {
 } from "./styles";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/core";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Login() {
   const navigation = useNavigation();
@@ -37,6 +38,9 @@ function Login() {
         const data = resp.data;
         if (data) {
           console.log(data);
+          AsyncStorage.setItem("auth_token", data.auth_token);
+          AsyncStorage.setItem("user_id", data.user_id);
+          navigation.push('Home')
         }
       });
   };
@@ -45,12 +49,12 @@ function Login() {
     <>
       <LoginContainer>
         <ImageSection>
-          <LoginImage source={require("../../assets/login-2.png")} />
           <LogoWrap>
             <Title>Skills Cat</Title>
             <LogoIcon name="logo-octocat" size={28} color="#ffffff" />
           </LogoWrap>
           <Desc>Faça login para acessar o seu catálogo de habilidades.</Desc>
+          <LoginImage source={require("../../assets/login-2.png")} />
         </ImageSection>
 
         <FormSection>
@@ -65,7 +69,7 @@ function Login() {
                     onChangeText={handleChange("email")}
                     onBlur={handleBlur("email")}
                     value={values.email}
-                    placeholder="E-mail"
+                    placeholder="Nome"
                     keyboardType="email-address"
                   />
                 </DescWrap>
