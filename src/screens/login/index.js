@@ -17,11 +17,15 @@ import {
   LogoWrap,
   Register,
   RegisterLink,
+  RegisterWrap,
   Title,
 } from "./styles";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/core";
 
 function Login() {
+  const navigation = useNavigation();
+
   const { logged } = useContext(AuthContext);
   console.log(logged);
 
@@ -79,10 +83,13 @@ function Login() {
               </Form>
             )}
           </Formik>
+
+          <RegisterWrap>
           <Register>
             Ainda não possui uma conta?
-            <RegisterLink>Registre-se aqui.</RegisterLink>
+            <RegisterLink onPress={() => navigation.push('Register')}>Registre-se aqui.</RegisterLink>
           </Register>
+          </RegisterWrap>
         </FormSection>
       </LoginContainer>
     </>

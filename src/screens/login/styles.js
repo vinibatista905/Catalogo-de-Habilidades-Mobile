@@ -73,6 +73,7 @@ export const FormTitle = styled.Text`
   font-size: 2.5rem;
   font-weight: 800;
   color: ${txPreto};
+  padding-top: 1rem;
 `;
 
 export const LoginBtn = styled.Button`
@@ -82,12 +83,11 @@ export const LoginBtn = styled.Button`
   color: ${txPreto};
   margin-top: 1rem;
   margin-top: 1rem;
-
 `;
 
 export const Form = styled.View`
   width: 100%;
-  height: 80%;
+  height: 85%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -99,7 +99,6 @@ export const DescWrap = styled.View`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-
 `;
 
 export const FormDesc = styled.Text`
@@ -122,11 +121,19 @@ export const FormInput = styled.TextInput`
   padding: 1rem;
   transition: all 0.2s linear;
 
+  :focus {
+    outline: none;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+  }
+`;
 
-:focus {
-  outline: none;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
-}
+export const RegisterWrap = styled.View`
+  display: flex;
+  height: 2rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1rem;
 `;
 
 export const Register = styled.Text`
@@ -136,7 +143,7 @@ export const Register = styled.Text`
   color: ${txPreto};
 `;
 
-export const RegisterLink = styled.Text`
+export const RegisterLink = styled.TouchableOpacity`
   font-family: "RegularFont";
   font-size: 1rem;
   font-weight: 700;
