@@ -12,65 +12,80 @@ import {
   ImageSection,
   LoginBtn,
   LoginContainer,
+  LoginImage,
   LogoIcon,
   LogoWrap,
+  Register,
+  RegisterLink,
   Title,
 } from "./styles";
-
-import { Image } from "react-native";
+import axios from "axios";
 
 function Login() {
   const { logged } = useContext(AuthContext);
-
   console.log(logged);
 
+  const login = async (values) => {
+    console.log(values);
+    await axios
+      .post("http://localhost:5000/user/login", values)
+      .then((resp) => {
+        const data = resp.data;
+        if (data) {
+          console.log(data);
+        }
+      });
+  };
+
   return (
-    <LoginContainer>
-      <ImageSection>
-        <Image source={require("../../assets/login-2.png")} />
-        <LogoWrap>
-          <Title>Skills Cat</Title>
-          <LogoIcon name="logo-octocat" size={28} color="#ffffff" />
-        </LogoWrap>
-        <Desc>Faça login para acessar o seu catálogo de habilidades.</Desc>
-      </ImageSection>
+    <>
+      <LoginContainer>
+        <ImageSection>
+          <LoginImage source={require("../../assets/login-2.png")} />
+          <LogoWrap>
+            <Title>Skills Cat</Title>
+            <LogoIcon name="logo-octocat" size={28} color="#ffffff" />
+          </LogoWrap>
+          <Desc>Faça login para acessar o seu catálogo de habilidades.</Desc>
+        </ImageSection>
 
-      <FormSection>
-        <FormTitle>Login</FormTitle>
+        <FormSection>
+          <FormTitle>Login</FormTitle>
 
-        <Formik
-          initialValues={{ email: "" }}
-          onSubmit={(values) => console.log(values)}
-        >
-          {({ handleChange, handleBlur, handleSubmit, values }) => (
-            <Form>
-              <DescWrap>
-                <FormDesc>E-mail*</FormDesc>
-                <FormInput
-                  onChangeText={handleChange("email")}
-                  onBlur={handleBlur("email")}
-                  value={values.email}
-                  placeholder="E-mail"
-                  keyboardType="email"
-                />
-              </DescWrap>
-              <DescWrap>
-                <FormDesc>Senha*</FormDesc>
-                <FormInput
-                  onChangeText={handleChange("password")}
-                  onBlur={handleBlur("password")}
-                  value={values.password}
-                  placeholder="Senha"
-                  keyboardType="numeric"
-                />
-              </DescWrap>
-              <LoginBtn onPress={handleSubmit} title="Login" />
-            </Form>
-          )}
-        </Formik>
-        {/* <LoginBtn title="login" onPress={() => {}} /> */}
-      </FormSection>
-    </LoginContainer>
+          <Formik initialValues={{}} onSubmit={(values) => login(values)}>
+            {({ handleChange, handleBlur, handleSubmit, values }) => (
+              <Form>
+                <DescWrap>
+                  <FormDesc>E-mail*</FormDesc>
+                  <FormInput
+                    onChangeText={handleChange("email")}
+                    onBlur={handleBlur("email")}
+                    value={values.email}
+                    placeholder="E-mail"
+                    keyboardType="email-address"
+                  />
+                </DescWrap>
+                <DescWrap>
+                  <FormDesc>Senha*</FormDesc>
+                  <FormInput
+                    onChangeText={handleChange("password")}
+                    onBlur={handleBlur("password")}
+                    value={values.password}
+                    placeholder="Senha"
+                    keyboardType="default"
+                  />
+                </DescWrap>
+                <LoginBtn onPress={handleSubmit} title="Login" />
+              </Form>
+            )}
+          </Formik>
+          <Register>
+            Ainda não possui uma conta?
+            <RegisterLink>Registre-se aqui.</RegisterLink>
+          </Register>
+        </FormSection>
+      </LoginContainer>
+    </>
   );
 }
 

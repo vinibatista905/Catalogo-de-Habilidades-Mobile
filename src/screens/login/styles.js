@@ -129,3 +129,16 @@ export const FormInput = styled.TextInput`
 }
 `;
 
+export const Register = styled.Text`
+  font-family: "RegularFont";
+  font-size: 1rem;
+  font-weight: 400;
+  color: ${txPreto};
+`;
+
+export const RegisterLink = styled.Text`
+  font-family: "RegularFont";
+  font-size: 1rem;
+  font-weight: 700;
+  color: ${btnAmarelo};
+`;
