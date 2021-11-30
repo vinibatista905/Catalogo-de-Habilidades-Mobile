@@ -12,6 +12,7 @@ import {
   TextInput,
   Button,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import {
   bgAzul,
@@ -60,11 +61,12 @@ export default function ForgotPassword() {
                       keyboardType="email-address"
                     />
                   </View>
-                  <Button
+                  <TouchableOpacity
+                  activeOpacity={0.75}
                     style={styles.loginBtn}
-                    onPress={handleSubmit}
-                    title="Enviar"
-                  />
+                    onPress={handleSubmit}>
+                      <Text style={styles.btnText}>Enviar</Text>
+                      </TouchableOpacity>
                 </View>
               )}
             </Formik>
@@ -76,7 +78,7 @@ export default function ForgotPassword() {
                   style={styles.registerLink}
                   onPress={() => navigation.push("Login")}
                 >
-                  Faça login aqui.
+                  Voltar para o login.
                 </Text>
               </Text>
             </View>
@@ -127,7 +129,7 @@ const styles = StyleSheet.create({
   },
 
   formSection: {
-    height: 380,
+    height: 400,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -181,11 +183,21 @@ const styles = StyleSheet.create({
   },
 
   loginBtn: {
-    width: 80,
-    height: 60,
+    justifyContent: "center",
+    alignContent: "flex-end",
+    flexDirection: "row",
+    width: 100,
+    height: 45,
     backgroundColor: btnAzul,
     borderRadius: 15,
     padding: 10,
+    marginTop: 15
+  },
+
+  btnText: {
+    fontSize: 15,
+    fontFamily: "BoldFont",
+    color: txBranco,
   },
 
   registerWrap: {

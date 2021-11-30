@@ -12,6 +12,7 @@ import {
   TextInput,
   Button,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import {
   bgAzul,
@@ -90,15 +91,17 @@ function Register() {
                       onChangeText={handleChange("password")}
                       onBlur={handleBlur("password")}
                       value={values.password}
+                      secureTextEntry={true}
                       placeholder="Senha"
                       keyboardType="default"
                     />
                   </View>
-                  <Button
+                  <TouchableOpacity
+                  activeOpacity={0.75}
                     style={styles.loginBtn}
-                    onPress={handleSubmit}
-                    title="Login"
-                  />
+                    onPress={handleSubmit}>
+                      <Text style={styles.btnText}>Registrar</Text>
+                      </TouchableOpacity>
                 </View>
               )}
             </Formik>
@@ -200,11 +203,21 @@ const styles = StyleSheet.create({
   },
 
   loginBtn: {
-    width: 80,
-    height: 60,
+    justifyContent: "center",
+    alignContent: "flex-end",
+    flexDirection: "row",
+    width: 100,
+    height: 45,
     backgroundColor: btnAzul,
     borderRadius: 15,
     padding: 10,
+    marginTop: 15
+  },
+
+  btnText: {
+    fontSize: 15,
+    fontFamily: "BoldFont",
+    color: txBranco,
   },
 
   registerWrap: {
