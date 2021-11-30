@@ -1,26 +1,30 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, SafeAreaView } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { bgAzul, txBranco } from "../UI/variaveis";
 
 export default function Navbar() {
   return (
     <>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.logoWrap}>
           <Text style={styles.logo}>Skills Cat</Text>
           <Icon name="logo-octocat" size={30} color="#ffffff" />
         </View>
         <View style={styles.imageWrap}>
-          <Image style={styles.image} source={require("../../assets/teste.jpg")} />
+          <Image
+            style={styles.image}
+            source={require("../../assets/teste.jpg")}
+          />
         </View>
-      </View>
+      </SafeAreaView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     height: 130,
     backgroundColor: bgAzul,
     flexDirection: "row",
@@ -55,6 +59,6 @@ const styles = StyleSheet.create({
   image: {
     width: 65,
     height: 65,
-    borderRadius: 50
+    borderRadius: 50,
   },
 });
