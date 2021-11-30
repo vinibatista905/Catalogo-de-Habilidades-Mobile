@@ -10,7 +10,6 @@ import {
   View,
   StyleSheet,
   TextInput,
-  Button,
   ScrollView,
   TouchableOpacity,
 } from "react-native";

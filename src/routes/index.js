@@ -7,8 +7,8 @@ import AuthRoutes from './auth.routes'
 const Routes = () => {
     return (
         <>
-        <AuthRoutes />
-        {/* <AppRoutes />     */}
+        {/* <AuthRoutes /> */}
+        <AppRoutes />    
        </>
     )
 }
