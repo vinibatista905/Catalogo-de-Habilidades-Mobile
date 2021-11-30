@@ -1,16 +1,18 @@
+import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { View, Text, StyleSheet, Image, SafeAreaView } from "react-native";
+import { View, Text, StyleSheet, Image, SafeAreaView, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { bgAzul, txBranco } from "../UI/variaveis";
 
 export default function Navbar() {
+  const navigation = useNavigation();
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <View style={styles.logoWrap}>
+        <TouchableOpacity style={styles.logoWrap} onPress={() => navigation.push("Home")}>
           <Text style={styles.logo}>Skills Cat</Text>
           <Icon name="logo-octocat" size={30} color="#ffffff" />
-        </View>
+        </TouchableOpacity>
         <View style={styles.imageWrap}>
           <Image
             style={styles.image}
