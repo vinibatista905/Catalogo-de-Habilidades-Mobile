@@ -15,7 +15,7 @@ const AppRoutes = () => {
     // return isLogged ? 
     return (
         <AppStack.Navigator>
-            <AppStack.Screen name="Home" component={Home} />
+            <AppStack.Screen name="Home" component={Home} options={{headerShown: false}} />
         </AppStack.Navigator>
     )
         // : navigation.push('Login');

@@ -1,6 +1,8 @@
 import React from "react";
 import Login from "../screens/login";
 import Register from "../screens/Register";
+import ForgotPassword from "../screens/forgotPassword";
+import ResetPassword from "../screens/resetPassword";
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { useNavigation } from "@react-navigation/core";
 
@@ -18,6 +20,8 @@ return(
         <AuthStack.Navigator>
             <AuthStack.Screen name="Login" component={Login} options={{headerShown: false}} />
             <AuthStack.Screen name="Register" component={Register} options={{headerShown: false}} />
+            <AuthStack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerShown: false}} />
+            <AuthStack.Screen name="ResetPassword" component={ResetPassword} options={{headerShown: false}} />
         </AuthStack.Navigator>
 )
     // : navigation.push('Home');

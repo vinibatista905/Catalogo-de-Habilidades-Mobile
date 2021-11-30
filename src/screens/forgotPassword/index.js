@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import AuthContext from "../../contexts/auth";
+import React from 'react'
 import Icon from "react-native-vector-icons/Ionicons";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -22,28 +21,11 @@ import {
   txBranco,
 } from "../../components/UI/variaveis";
 
-function Login() {
-  const navigation = useNavigation();
+export default function ForgotPassword() {
+    const navigation = useNavigation();
 
-  const { logged } = useContext(AuthContext);
-
-  const login = async (values) => {
-    console.log(values);
-    await axios
-      .post("http://localhost:5000/user/login", values)
-      .then((resp) => {
-        const data = resp.data;
-        if (data) {
-          console.log(data);
-          // AsyncStorage.setItem("auth_token", data.auth_token);
-          // AsyncStorage.setItem("user_id", data.user_id);
-          // navigation.push("Home");
-        }
-      });
-  };
-
-  return (
-    <>
+    return (
+        <>
       <ScrollView>
         <View style={styles.loginContainer}>
           <View style={styles.imageSection}>
@@ -52,16 +34,17 @@ function Login() {
               <Icon name="logo-octocat" size={40} color="#ffffff" />
             </View>
             <Text style={styles.desc}>
-              Faça login para acessar o seu catálogo de habilidades.
+              Verifique o seu e-mail para utilizar o token de alteração de senha.
             </Text>
             <Image
               style={styles.loginImage}
-              source={require("../../assets/login-2.png")}
+              source={require("../../assets/password.png")}
             />
           </View>
 
           <View style={styles.formSection}>
-            <Text style={styles.formTitle}>Login</Text>
+            <Text style={styles.formTitle}>Alterar Senha</Text>
+            <Text style={styles.formMessage}>Insira seu e-mail e enviaremos um token para alterar a senha.</Text>
 
             <Formik initialValues={{}} onSubmit={(values) => login(values)}>
               {({ handleChange, handleBlur, handleSubmit, values }) => (
@@ -77,22 +60,10 @@ function Login() {
                       keyboardType="email-address"
                     />
                   </View>
-                  <View style={styles.descWrap}>
-                    <Text style={styles.formDesc}>Senha*</Text>
-                    <TextInput
-                      style={styles.input}
-                      onChangeText={handleChange("password")}
-                      onBlur={handleBlur("password")}
-                      value={values.password}
-                      placeholder="Senha"
-                      keyboardType="default"
-                    />
-                  </View>
-                  <Text style={styles.passwordLink} onPress={() => navigation.push("ForgotPassword")}>Esqueceu a senha?</Text>
                   <Button
                     style={styles.loginBtn}
                     onPress={handleSubmit}
-                    title="Login"
+                    title="Enviar"
                   />
                 </View>
               )}
@@ -100,12 +71,12 @@ function Login() {
 
             <View style={styles.registerWrap}>
               <Text style={styles.register}>
-                Ainda não possui uma conta?
+                Lembrou a sua senha?
                 <Text
                   style={styles.registerLink}
-                  onPress={() => navigation.push("Register")}
+                  onPress={() => navigation.push("Login")}
                 >
-                  Registre-se aqui.
+                  Faça login aqui.
                 </Text>
               </Text>
             </View>
@@ -144,6 +115,7 @@ const styles = StyleSheet.create({
   },
 
   desc: {
+      width: 350,
     justifyContent: "center",
     alignItems: "center",
     color: txBranco,
@@ -155,7 +127,7 @@ const styles = StyleSheet.create({
   },
 
   formSection: {
-    height: 450,
+    height: 380,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -165,6 +137,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     fontSize: 40,
     fontFamily: "ExtraBold",
+  },
+
+  formMessage: {
+      width: 320,
+    fontSize: 17,
+    padding: 10
   },
 
   form: {
@@ -211,7 +189,7 @@ const styles = StyleSheet.create({
   },
 
   registerWrap: {
-    width: 280,
+    width: 250,
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
@@ -226,5 +204,3 @@ const styles = StyleSheet.create({
     color: btnAmarelo,
   },
 });
-
-export default Login;
