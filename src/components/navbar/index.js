@@ -24,7 +24,6 @@ export default function Navbar() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     height: 130,
     backgroundColor: bgAzul,
     flexDirection: "row",
