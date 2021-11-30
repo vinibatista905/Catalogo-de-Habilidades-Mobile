@@ -18,10 +18,10 @@ export const LoginContainer = styled.View`
 
 export const ImageSection = styled.View`
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
   background: ${bgAzul};
-  gap: 1rem;
+  
   height: 60vh;
   width: 100%;
 `;
@@ -73,7 +73,7 @@ export const FormSection = styled.View`
 
 export const FormTitle = styled.Text`
   font-family: "ExtraBold";
-  font-size: 2.5rem;
+  font-size: 25;
   font-weight: 800;
   color: ${txPreto};
   padding-top: 1rem;
@@ -85,7 +85,7 @@ export const LoginBtn = styled.Button`
   background: ${btnAmarelo};
   color: ${txPreto};
   margin-top: 1rem;
-  margin-top: 1rem;
+  
 `;
 
 export const Form = styled.View`
@@ -94,7 +94,7 @@ export const Form = styled.View`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+ 
 `;
 
 export const DescWrap = styled.View`
@@ -136,7 +136,7 @@ export const RegisterWrap = styled.View`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 1rem;
+
 `;
 
 export const Register = styled.Text`

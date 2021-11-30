@@ -1,34 +1,31 @@
 import React, { useContext } from "react";
 import AuthContext from "../../contexts/auth";
-import { Formik } from "formik";
-import {
-  Desc,
-  DescWrap,
-  Form,
-  FormDesc,
-  FormInput,
-  FormSection,
-  FormTitle,
-  ImageSection,
-  LoginBtn,
-  LoginContainer,
-  LoginImage,
-  LogoIcon,
-  LogoWrap,
-  Register,
-  RegisterLink,
-  RegisterWrap,
-  Title,
-} from "./styles";
+import Icon from "react-native-vector-icons/Ionicons";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Formik } from "formik";
 import { useNavigation } from "@react-navigation/core";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  Image,
+  Text,
+  View,
+  StyleSheet,
+  TextInput,
+  Button,
+  ScrollView,
+} from "react-native";
+import {
+  bgAzul,
+  bgCinza,
+  btnAmarelo,
+  btnAzul,
+  txBranco,
+} from "../../components/UI/variaveis";
 
 function Login() {
   const navigation = useNavigation();
 
   const { logged } = useContext(AuthContext);
-  console.log(logged);
 
   const login = async (values) => {
     console.log(values);
@@ -38,66 +35,187 @@ function Login() {
         const data = resp.data;
         if (data) {
           console.log(data);
-          AsyncStorage.setItem("auth_token", data.auth_token);
-          AsyncStorage.setItem("user_id", data.user_id);
-          navigation.push('Home')
+          // AsyncStorage.setItem("auth_token", data.auth_token);
+          // AsyncStorage.setItem("user_id", data.user_id);
+          // navigation.push("Home");
         }
       });
   };
 
   return (
     <>
-      <LoginContainer>
-        <ImageSection>
-          <LogoWrap>
-            <Title>Skills Cat</Title>
-            <LogoIcon name="logo-octocat" size={28} color="#ffffff" />
-          </LogoWrap>
-          <Desc>Faça login para acessar o seu catálogo de habilidades.</Desc>
-          <LoginImage source={require("../../assets/login-2.png")} />
-        </ImageSection>
+      <ScrollView>
+        <View style={styles.loginContainer}>
+          <View style={styles.imageSection}>
+            <View style={styles.logoWrap}>
+              <Text style={styles.title}>Skills Cat</Text>
+              <Icon name="logo-octocat" size={40} color="#ffffff" />
+            </View>
+            <Text style={styles.desc}>
+              Faça login para acessar o seu catálogo de habilidades.
+            </Text>
+            <Image
+              style={styles.loginImage}
+              source={require("../../assets/login-2.png")}
+            />
+          </View>
 
-        <FormSection>
-          <FormTitle>Login</FormTitle>
+          <View style={styles.formSection}>
+            <Text style={styles.formTitle}>Login</Text>
 
-          <Formik initialValues={{}} onSubmit={(values) => login(values)}>
-            {({ handleChange, handleBlur, handleSubmit, values }) => (
-              <Form>
-                <DescWrap>
-                  <FormDesc>E-mail*</FormDesc>
-                  <FormInput
-                    onChangeText={handleChange("email")}
-                    onBlur={handleBlur("email")}
-                    value={values.email}
-                    placeholder="Nome"
-                    keyboardType="email-address"
+            <Formik initialValues={{}} onSubmit={(values) => login(values)}>
+              {({ handleChange, handleBlur, handleSubmit, values }) => (
+                <View style={styles.form}>
+                  <View style={styles.descWrap}>
+                    <Text style={styles.formDesc}>E-mail*</Text>
+                    <TextInput
+                      style={styles.input}
+                      onChangeText={handleChange("email")}
+                      onBlur={handleBlur("email")}
+                      value={values.email}
+                      placeholder="E-mail"
+                      keyboardType="email-address"
+                    />
+                  </View>
+                  <View style={styles.descWrap}>
+                    <Text style={styles.formDesc}>Senha*</Text>
+                    <TextInput
+                      style={styles.input}
+                      onChangeText={handleChange("password")}
+                      onBlur={handleBlur("password")}
+                      value={values.password}
+                      placeholder="Senha"
+                      keyboardType="default"
+                    />
+                  </View>
+                  <Button
+                    style={styles.loginBtn}
+                    onPress={handleSubmit}
+                    title="Login"
                   />
-                </DescWrap>
-                <DescWrap>
-                  <FormDesc>Senha*</FormDesc>
-                  <FormInput
-                    onChangeText={handleChange("password")}
-                    onBlur={handleBlur("password")}
-                    value={values.password}
-                    placeholder="Senha"
-                    keyboardType="default"
-                  />
-                </DescWrap>
-                <LoginBtn onPress={handleSubmit} title="Login" />
-              </Form>
-            )}
-          </Formik>
+                </View>
+              )}
+            </Formik>
 
-          <RegisterWrap>
-          <Register>
-            Ainda não possui uma conta?
-            <RegisterLink onPress={() => navigation.push('Register')}>Registre-se aqui.</RegisterLink>
-          </Register>
-          </RegisterWrap>
-        </FormSection>
-      </LoginContainer>
+            <View style={styles.registerWrap}>
+              <Text style={styles.register}>
+                Ainda não possui uma conta?
+                <Text
+                  style={styles.registerLink}
+                  onPress={() => navigation.push("Register")}
+                >
+                  Registre-se aqui.
+                </Text>
+              </Text>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  loginContainer: {
+    flex: 1,
+  },
+
+  imageSection: {
+    height: 400,
+    backgroundColor: bgAzul,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  logoWrap: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+
+  title: {
+    justifyContent: "center",
+    alignItems: "center",
+    color: txBranco,
+    fontSize: 40,
+    fontFamily: "ExtraBold",
+    paddingRight: 10,
+  },
+
+  desc: {
+    justifyContent: "center",
+    alignItems: "center",
+    color: txBranco,
+  },
+
+  loginImage: {
+    height: 240,
+    width: 240,
+  },
+
+  formSection: {
+    height: 390,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  formTitle: {
+    justifyContent: "center",
+    alignItems: "center",
+    fontSize: 40,
+    fontFamily: "ExtraBold",
+  },
+
+  form: {
+    justifyContent: "center",
+    alignItems: "flex-start",
+    padding: 5,
+  },
+
+  descWrap: {
+    justifyContent: "center",
+    alignItems: "flex-start",
+    padding: 10,
+  },
+
+  formDesc: {
+    fontSize: 20,
+    fontFamily: "BoldFont",
+  },
+
+  input: {
+    width: 320,
+    height: 60,
+    fontSize: 20,
+    fontFamily: "RegularFont",
+    backgroundColor: bgCinza,
+    borderRadius: 15,
+    padding: 10,
+  },
+
+  loginBtn: {
+    width: 80,
+    height: 60,
+    backgroundColor: btnAzul,
+    borderRadius: 15,
+    padding: 10,
+  },
+
+  registerWrap: {
+    width: 280,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 20,
+  },
+
+  register: {
+    fontSize: 17,
+  },
+
+  registerLink: {
+    fontFamily: "BoldFont",
+    color: btnAmarelo,
+  },
+});
 
 export default Login;

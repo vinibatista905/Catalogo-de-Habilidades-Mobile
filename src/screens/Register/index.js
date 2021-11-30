@@ -1,26 +1,25 @@
 import React from "react";
-import { Formik } from "formik";
-import {
-  Desc,
-  DescWrap,
-  Form,
-  FormDesc,
-  FormInput,
-  FormSection,
-  FormTitle,
-  ImageSection,
-  RegisterBtn,
-  RegisterContainer,
-  RegisterImage,
-  LogoIcon,
-  LogoWrap,
-  Login,
-  LoginLink,
-  LoginWrap,
-  Title,
-} from "./styles";
+import Icon from "react-native-vector-icons/Ionicons";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Formik } from "formik";
 import { useNavigation } from "@react-navigation/core";
+import {
+  Image,
+  Text,
+  View,
+  StyleSheet,
+  TextInput,
+  Button,
+  ScrollView,
+} from "react-native";
+import {
+  bgAzul,
+  bgCinza,
+  btnAmarelo,
+  btnAzul,
+  txBranco,
+} from "../../components/UI/variaveis";
 
 function Register() {
   const navigation = useNavigation();
@@ -33,78 +32,196 @@ function Register() {
         const data = resp.data;
         if (data) {
           console.log(data);
-          navigation.push("Login");
+          // navigation.push("Login");
         }
       });
   };
 
   return (
     <>
-      <RegisterContainer>
-        <ImageSection>
-          <RegisterImage source={require("../../assets/login-2.png")} />
-          <LogoWrap>
-            <Title>Skills Cat</Title>
-            <LogoIcon name="logo-octocat" size={28} color="#ffffff" />
-          </LogoWrap>
-          <Desc>
-            Cadastre-se e comece agora a criar o seu catálogo de habilidades.
-          </Desc>
-        </ImageSection>
+      <ScrollView>
+        <View style={styles.loginContainer}>
+          <View style={styles.imageSection}>
+            <View style={styles.logoWrap}>
+              <Text style={styles.title}>Skills Cat</Text>
+              <Icon name="logo-octocat" size={40} color="#ffffff" />
+            </View>
+            <Text style={styles.desc}>
+              Cadastre-se e comece agora a criar o seu catálogo de habilidades.
+            </Text>
+            <Image
+              style={styles.loginImage}
+              source={require("../../assets/register-1.png")}
+            />
+          </View>
 
-        <FormSection>
-          <FormTitle>Registre-se</FormTitle>
+          <View style={styles.formSection}>
+            <Text style={styles.formTitle}>Registrar-se</Text>
 
-          <Formik initialValues={{}} onSubmit={(values) => login(values)}>
-            {({ handleChange, handleBlur, handleSubmit, values }) => (
-              <Form>
-                <DescWrap>
-                  <FormDesc>Nome*</FormDesc>
-                  <FormInput
-                    onChangeText={handleChange("name")}
-                    onBlur={handleBlur("name")}
-                    value={values.name}
-                    placeholder="E-mail"
-                    keyboardType="email-address"
+            <Formik initialValues={{}} onSubmit={(values) => login(values)}>
+              {({ handleChange, handleBlur, handleSubmit, values }) => (
+                <View style={styles.form}>
+                  <View style={styles.descWrap}>
+                    <Text style={styles.formDesc}>Nome*</Text>
+                    <TextInput
+                      style={styles.input}
+                      onChangeText={handleChange("name")}
+                      onBlur={handleBlur("name")}
+                      value={values.name}
+                      placeholder="Nome"
+                      keyboardType="email-address"
+                    />
+                  </View>
+                  <View style={styles.descWrap}>
+                    <Text style={styles.formDesc}>E-mail*</Text>
+                    <TextInput
+                      style={styles.input}
+                      onChangeText={handleChange("email")}
+                      onBlur={handleBlur("email")}
+                      value={values.email}
+                      placeholder="E-mail"
+                      keyboardType="email-address"
+                    />
+                  </View>
+                  <View style={styles.descWrap}>
+                    <Text style={styles.formDesc}>Senha*</Text>
+                    <TextInput
+                      style={styles.input}
+                      onChangeText={handleChange("password")}
+                      onBlur={handleBlur("password")}
+                      value={values.password}
+                      placeholder="Senha"
+                      keyboardType="default"
+                    />
+                  </View>
+                  <Button
+                    style={styles.loginBtn}
+                    onPress={handleSubmit}
+                    title="Login"
                   />
-                </DescWrap>
-                <DescWrap>
-                  <FormDesc>E-mail*</FormDesc>
-                  <FormInput
-                    onChangeText={handleChange("email")}
-                    onBlur={handleBlur("email")}
-                    value={values.email}
-                    placeholder="E-mail"
-                    keyboardType="email-address"
-                  />
-                </DescWrap>
-                <DescWrap>
-                  <FormDesc>Senha*</FormDesc>
-                  <FormInput
-                    onChangeText={handleChange("password")}
-                    onBlur={handleBlur("password")}
-                    value={values.password}
-                    placeholder="Senha"
-                    keyboardType="default"
-                  />
-                </DescWrap>
-                <RegisterBtn onPress={handleSubmit} title="Registar" />
-              </Form>
-            )}
-          </Formik>
+                </View>
+              )}
+            </Formik>
 
-          <LoginWrap>
-            <Login>
-              Já possui uma conta?
-              <LoginLink onPress={() => navigation.push("Login")}>
-                Faça login aqui.
-              </LoginLink>
-            </Login>
-          </LoginWrap>
-        </FormSection>
-      </RegisterContainer>
+            <View style={styles.registerWrap}>
+              <Text style={styles.register}>
+                Já possui uma conta?
+                <Text
+                  style={styles.registerLink}
+                  onPress={() => navigation.push("Login")}
+                >
+                  Faça login aqui.
+                </Text>
+              </Text>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  loginContainer: {
+    flex: 1,
+  },
+
+  imageSection: {
+    height: 430,
+    backgroundColor: bgAzul,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  logoWrap: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+
+  title: {
+    justifyContent: "center",
+    alignItems: "center",
+    color: txBranco,
+    fontSize: 40,
+    fontFamily: "ExtraBold",
+    paddingRight: 10,
+  },
+
+  desc: {
+    justifyContent: "center",
+    alignItems: "center",
+    color: txBranco,
+  },
+
+  loginImage: {
+    height: 240,
+    width: 240,
+  },
+
+  formSection: {
+    height: 540,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  formTitle: {
+    justifyContent: "center",
+    alignItems: "center",
+    fontSize: 40,
+    fontFamily: "ExtraBold",
+  },
+
+  form: {
+    justifyContent: "center",
+    alignItems: "flex-start",
+    padding: 5,
+  },
+
+  descWrap: {
+    justifyContent: "center",
+    alignItems: "flex-start",
+    padding: 10,
+  },
+
+  formDesc: {
+    fontSize: 20,
+    fontFamily: "BoldFont",
+  },
+
+  input: {
+    width: 320,
+    height: 60,
+    fontSize: 20,
+    fontFamily: "RegularFont",
+    backgroundColor: bgCinza,
+    borderRadius: 15,
+    padding: 10,
+  },
+
+  loginBtn: {
+    width: 80,
+    height: 60,
+    backgroundColor: btnAzul,
+    borderRadius: 15,
+    padding: 10,
+  },
+
+  registerWrap: {
+    width: 200,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 20,
+  },
+
+  register: {
+    fontSize: 17,
+  },
+
+  registerLink: {
+    fontFamily: "BoldFont",
+    color: btnAmarelo,
+  },
+});
 
 export default Register;
