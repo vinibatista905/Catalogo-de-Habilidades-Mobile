@@ -19,7 +19,7 @@ export const HomeData = [
         titulo: "Editar Habilidades",
         icon1: "edit",
         icon2: "",
-        navigate: "EditSkill"
+        navigate: "EditSkills"
     },
     {
         id: 4,
