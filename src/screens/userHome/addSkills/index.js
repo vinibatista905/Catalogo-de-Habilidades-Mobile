@@ -30,7 +30,7 @@ export default function AddSkills() {
   const login = async (values) => {
     console.log(values);
     await axios
-      .post("http://localhost:5000/user/register", values)
+      .post("http://192.168.2.125:5000/user/create_skill", values)
       .then((resp) => {
         const data = resp.data;
         if (data) {
