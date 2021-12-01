@@ -4,18 +4,20 @@ import {
   Text,
   View,
   StyleSheet,
-  ScrollView,
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import { btnAzul, txBranco } from "../../../components/UI/variaveis";
+import { btnAmarelo, btnAzul, txBranco, txPreto } from "../../../components/UI/variaveis";
 import Navbar from "../../../components/navbar";
 import UserSkills from "../../../components/userSkills";
+import { useNavigation } from "@react-navigation/core";
 
 
 export default function AllSkills() {
-  const userId = 1;
 
+  const navigation = useNavigation();
+
+  const userId = 1;
   const [userSkills, setUserSkills] = useState([]);
 
   useEffect(() => {
@@ -31,34 +33,38 @@ export default function AllSkills() {
 
   return (
     <>
-      
-        <View style={styles.container}>
-          <Navbar />
+      <View style={styles.container}>
+        <Navbar />
 
-            <Text style={styles.title}>Essas são as suas habilidades</Text>
-          <View style={styles.skillsSection}>
+        <Text style={styles.title}>Essas são as suas habilidades</Text>
+        <View style={styles.skillsSection}>
+          <View style={styles.wrap}>
+            <FlatList
+              numColumns={2}
+              data={userSkills}
+              renderItem={({ item }) => <UserSkills {...item} />}
+              keyExtractor={(item) => item.id}
+            />
+          </View>
 
-            <View style={styles.wrap}>
-              <FlatList
-                numColumns={2}
-                data={userSkills}
-                renderItem={({ item }) => <UserSkills {...item} />}
-                keyExtractor={(item) => item.id}
-              />
-            </View>
-
-            <View style={styles.btnWrap}>
-              <TouchableOpacity
-                activeOpacity={0.75}
-                style={styles.addBtn}
-                onPress={() => navigation.push("AddSkills")}
-              >
-                <Text style={styles.btnText1}>Adicionar</Text>
-              </TouchableOpacity>
-            </View>
+          <View style={styles.btnWrap}>
+            <TouchableOpacity
+              activeOpacity={0.75}
+              style={styles.btn1}
+              onPress={() => navigation.push("AddSkills")}
+            >
+              <Text style={styles.btnText1}>Adicionar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.75}
+              style={styles.btn2}
+              onPress={() => navigation.push("AddSkills")}
+            >
+              <Text style={styles.btnText2}>Editar</Text>
+            </TouchableOpacity>
           </View>
         </View>
-      
+      </View>
     </>
   );
 }
@@ -81,7 +87,7 @@ const styles = StyleSheet.create({
     fontFamily: "BoldFont",
     textAlign: "center",
     padding: 20,
-    marginBottom: 40
+    marginBottom: 40,
   },
 
   wrap: {
@@ -96,7 +102,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
 
-  addBtn: {
+  btn1: {
     justifyContent: "center",
     alignContent: "flex-end",
     flexDirection: "row",
@@ -109,10 +115,30 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
 
+  btn2: {
+    justifyContent: "center",
+    alignContent: "flex-end",
+    flexDirection: "row",
+    width: 100,
+    height: 45,
+    backgroundColor: btnAmarelo,
+    borderRadius: 15,
+    padding: 10,
+    marginTop: 15,
+    marginRight: 20,
+  },
+
   btnText1: {
     fontSize: 15,
     fontFamily: "BoldFont",
     color: txBranco,
+    textAlign: "center",
+  },
+
+  btnText2: {
+    fontSize: 15,
+    fontFamily: "BoldFont",
+    color: txPreto,
     textAlign: "center",
   },
 });
