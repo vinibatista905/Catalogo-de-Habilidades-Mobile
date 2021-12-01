@@ -6,7 +6,7 @@ import { btnVerde, txBranco, txCinzaEscuro, txVermelho } from "../UI/variaveis";
 
 export default function UserEditSkills({ type, name, level }) {
   
-
+    
   return (
     <>
       <View style={styles.card}>

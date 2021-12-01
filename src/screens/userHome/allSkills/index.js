@@ -58,7 +58,7 @@ export default function AllSkills() {
             <TouchableOpacity
               activeOpacity={0.75}
               style={styles.btn2}
-              onPress={() => navigation.push("AddSkills")}
+              onPress={() => navigation.push("EditSkills")}
             >
               <Text style={styles.btnText2}>Editar</Text>
             </TouchableOpacity>
