@@ -3,7 +3,6 @@ import { Text, StyleSheet, View } from "react-native";
 import { txBranco, txCinzaEscuro } from "../UI/variaveis";
 
 export default function UserProjects({ name, manager, startDate, conclusionDate, skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8 }) {
-  
 
   return (
     <>

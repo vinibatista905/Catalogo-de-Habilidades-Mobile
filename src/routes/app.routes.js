@@ -7,6 +7,7 @@ import AllUsers from "../screens/userHome/allUsers";
 import AddProjects from "../screens/userHome/addProjects";
 import AllProjects from "../screens/userHome/allProjects";
 import EditProjects from "../screens/userHome/editProjects";
+import Profile from "../screens/userHome/profile";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -25,6 +26,7 @@ const AppRoutes = () => {
                 <AppStack.Screen name="AddProjects" component={AddProjects} options={{headerShown: false}} />
                 <AppStack.Screen name="AllProjects" component={AllProjects} options={{headerShown: false}} />
                 <AppStack.Screen name="EditProjects" component={EditProjects} options={{headerShown: false}} />
+                <AppStack.Screen name="Profile" component={Profile} options={{headerShown: false}} />
         </AppStack.Navigator>
     )  
 }

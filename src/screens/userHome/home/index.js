@@ -14,6 +14,9 @@ import { bgCinza, txBranco } from "../../../components/UI/variaveis";
 import { HomeData } from "../../../utils/data";
 
 function Home(params) {
+
+  console.log(HomeData);
+  
   return (
     <>
       <ScrollView>

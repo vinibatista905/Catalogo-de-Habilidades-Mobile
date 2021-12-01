@@ -6,10 +6,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  Image,
 } from "react-native";
 import { btnAmarelo, btnAzul, txBranco, txPreto } from "../../../components/UI/variaveis";
 import Navbar from "../../../components/navbar";
-import UserProjects from "../../../components/userProjects";
+import UserSkills from "../../../components/userSkills";
 import { useNavigation } from "@react-navigation/core";
 
 
@@ -18,38 +19,35 @@ export default function AllSkills() {
   const navigation = useNavigation();
 
   const userId = 1;
-  const [userProjects, setUserProjects] = useState([]);
+  const [userProfile, setUserProfile] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`http://192.168.2.125:5000/user/check_project/${userId}`)
+      .get(`http://192.168.2.125:5000/user/check_profile/${userId}`)
       .then(({ data }) => {
-        setUserProjects(data);
-        // console.log(userProjects);
+        setUserProfile(data);
+        console.log(data);
 
         // eslint-disable-next-line
       });
   }, []);
-
-  const projectData = userProjects.map((user)=> user.Projects.map((Projects) => Projects))
-
-  console.log(projectData);
 
   return (
     <>
       <View style={styles.container}>
         <Navbar />
 
-        <Text style={styles.title}>Esses são os seus projetos</Text>
-        <View style={styles.projectsSection}>
+        <View style={styles.profileSection}>
+            {userProfile?.map((profile) => (
           <View style={styles.wrap}>
-            <FlatList
-              numColumns={2}
-              data={projectData}
-              renderItem={({ item }) => <UserProjects {...item} />}
-              keyExtractor={(item) => item.id}
-            />
-          </View>
+                <Image source={ {uri:`https://res.cloudinary.com/dudmycscb/image/upload/v1637673173/${profile.profileImage}.jpg`}} style={styles.profileImage}  />
+                <Text>{profile.id}</Text>
+                <Text>Cargo: {profile.role}</Text>
+                <Text>Time: {profile.team}</Text>
+                <Text>Data de início: {profile.startDate}</Text>
+                <Text>Celular: {profile.phone}</Text>
+                </View>
+                ))}
 
           <View style={styles.btnWrap}>
             <TouchableOpacity
@@ -78,10 +76,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  projectsSection: {
+  profileSection: {
     height: 520,
     justifyContent: "center",
     alignItems: "center",
+  },
+
+  profileImage: {
+    width: 200,
+    height: 200,
+    borderRadius: 100
   },
 
   title: {

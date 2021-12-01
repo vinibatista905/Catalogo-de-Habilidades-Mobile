@@ -9,16 +9,17 @@ export default function Navbar() {
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <TouchableOpacity style={styles.logoWrap} onPress={() => navigation.push("Home")}>
+        <TouchableOpacity style={styles.logoWrap} activeOpacity={0.75} onPress={() => navigation.push("Home")}>
           <Text style={styles.logo}>Skills Cat</Text>
           <Icon name="logo-octocat" size={30} color="#ffffff" />
         </TouchableOpacity>
-        <View style={styles.imageWrap}>
+
+        <TouchableOpacity style={styles.imageWrap} activeOpacity={0.75} onPress={() => navigation.push("Profile")}>
           <Image
             style={styles.image}
             source={require("../../assets/teste.jpg")}
           />
-        </View>
+        </TouchableOpacity>
       </SafeAreaView>
     </>
   );
