@@ -5,16 +5,23 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
   FlatList,
 } from "react-native";
-import { btnAmarelo, btnAzul, txBranco, txPreto } from "../../../components/UI/variaveis";
+import {
+  bgCinza,
+  bgCinzaEscuro,
+  btnAmarelo,
+  btnAzul,
+  txBranco,
+  txCinzaEscuro,
+  txPreto,
+} from "../../../components/UI/variaveis";
 import Navbar from "../../../components/navbar";
-import UserProjects from "../../../components/userProjects";
 import { useNavigation } from "@react-navigation/core";
-
+import UserProjectsCards from "../../../components/userProjectsCards";
 
 export default function AllSkills() {
-
   const navigation = useNavigation();
 
   const userId = 1;
@@ -25,15 +32,12 @@ export default function AllSkills() {
       .get(`http://192.168.2.125:5000/user/check_project/${userId}`)
       .then(({ data }) => {
         setUserProjects(data);
-        // console.log(userProjects);
 
         // eslint-disable-next-line
       });
   }, []);
 
-  const projectData = userProjects.map((user)=> user.Projects.map((Projects) => Projects))
-
-  console.log(projectData);
+  const projectData = userProjects.Projects;
 
   return (
     <>
@@ -44,9 +48,8 @@ export default function AllSkills() {
         <View style={styles.projectsSection}>
           <View style={styles.wrap}>
             <FlatList
-              numColumns={2}
               data={projectData}
-              renderItem={({ item }) => <UserProjects {...item} />}
+              renderItem={({ item }) => <UserProjectsCards {...item} />}
               keyExtractor={(item) => item.id}
             />
           </View>
@@ -55,14 +58,14 @@ export default function AllSkills() {
             <TouchableOpacity
               activeOpacity={0.75}
               style={styles.btn1}
-              onPress={() => navigation.push("AddSkills")}
+              onPress={() => navigation.push("AddProjects")}
             >
               <Text style={styles.btnText1}>Adicionar</Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.75}
               style={styles.btn2}
-              onPress={() => navigation.push("EditSkills")}
+              onPress={() => navigation.push("EditProjects")}
             >
               <Text style={styles.btnText2}>Editar</Text>
             </TouchableOpacity>
@@ -76,10 +79,11 @@ export default function AllSkills() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: bgCinza,
   },
 
   projectsSection: {
-    height: 520,
+    height: 500,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -92,9 +96,19 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 20,
     marginBottom: 40,
+    color: txCinzaEscuro,
   },
 
   wrap: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  projectCard: {
+    width: 200,
+    height: 100,
+    backgroundColor: txBranco,
+    borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
   },
