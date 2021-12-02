@@ -1,24 +1,33 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView } from "react-native";
 import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  FlatList,
-  Image,
-} from "react-native";
-import { btnAmarelo, btnAzul, txBranco, txPreto } from "../../../components/UI/variaveis";
+  btnAmarelo,
+  btnAzul,
+  txBranco,
+  txCinzaEscuro,
+  txPreto,
+} from "../../../components/UI/variaveis";
+import LinkedinIcon from "react-native-vector-icons/AntDesign";
+import GithubIcon from "react-native-vector-icons/AntDesign";
 import Navbar from "../../../components/navbar";
-import UserSkills from "../../../components/userSkills";
 import { useNavigation } from "@react-navigation/core";
 
-
 export default function AllSkills() {
-
   const navigation = useNavigation();
-
   const userId = 1;
+
+  const [userInfo, setUserInfo] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://192.168.2.125:5000/user/info/${userId}`)
+      .then(({ data }) => {
+        setUserInfo(data);
+        // eslint-disable-next-line
+      });
+  }, []);
+
   const [userProfile, setUserProfile] = useState([]);
 
   useEffect(() => {
@@ -34,20 +43,52 @@ export default function AllSkills() {
 
   return (
     <>
+    <ScrollView>
       <View style={styles.container}>
         <Navbar />
 
         <View style={styles.profileSection}>
-            {userProfile?.map((profile) => (
-          <View style={styles.wrap}>
-                <Image source={ {uri:`https://res.cloudinary.com/dudmycscb/image/upload/v1637673173/${profile.profileImage}.jpg`}} style={styles.profileImage}  />
-                <Text>{profile.id}</Text>
-                <Text>Cargo: {profile.role}</Text>
-                <Text>Time: {profile.team}</Text>
-                <Text>Data de início: {profile.startDate}</Text>
-                <Text>Celular: {profile.phone}</Text>
-                </View>
-                ))}
+          {userProfile?.map((profile) => (
+            <View key={profile.id} style={styles.wrap}>
+              <Image
+                source={{
+                  uri: `https://res.cloudinary.com/dudmycscb/image/upload/v1637673173/${profile.profileImage}.jpg`,
+                }}
+                style={styles.profileImage}
+              />
+
+              {userInfo?.map((user) => (
+                <Text style={styles.profileName} key={user.id}>
+                  {user.name}
+                </Text>
+              ))}
+
+              <View style={styles.iconWrap}>
+                <TouchableOpacity>
+                  <LinkedinIcon
+                    name="linkedin-square"
+                    size={36}
+                    style={styles.icon}
+                  ></LinkedinIcon>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <GithubIcon
+                    name="github"
+                    size={36}
+                    style={styles.icon}
+                  ></GithubIcon>
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.infoWrap}>
+                <Text style={styles.infoType}>Cargo: <Text style={styles.info}> {profile.role}</Text> </Text>
+                <Text style={styles.infoType}>Time: <Text style={styles.info}> {profile.team}</Text></Text>
+                <Text style={styles.infoType}>Data de início: <Text style={styles.info}> {profile.startDate}</Text></Text>
+                <Text style={styles.infoType}>Celular: <Text style={styles.info}> {profile.phone}</Text></Text>
+              </View>
+
+          </View>
+          ))}
 
           <View style={styles.btnWrap}>
             <TouchableOpacity
@@ -60,13 +101,14 @@ export default function AllSkills() {
             <TouchableOpacity
               activeOpacity={0.75}
               style={styles.btn2}
-              onPress={() => navigation.push("EditSkills")}
+              onPress={() => navigation.push("EditProfile")}
             >
               <Text style={styles.btnText2}>Editar</Text>
             </TouchableOpacity>
           </View>
         </View>
       </View>
+      </ScrollView>
     </>
   );
 }
@@ -77,7 +119,7 @@ const styles = StyleSheet.create({
   },
 
   profileSection: {
-    height: 520,
+    height: 750,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -85,22 +127,52 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 200,
     height: 200,
-    borderRadius: 100
+    borderRadius: 100,
+    marginBottom: 10
   },
 
-  title: {
+  profileName: {
     justifyContent: "center",
     alignItems: "center",
-    fontSize: 25,
+    fontSize: 35,
     fontFamily: "BoldFont",
     textAlign: "center",
-    padding: 20,
-    marginBottom: 40,
+    marginBottom: 5
   },
 
   wrap: {
     justifyContent: "center",
     alignItems: "center",
+  },
+
+  iconWrap: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  icon: {
+    color: txCinzaEscuro,
+    paddingHorizontal: 12,
+  },
+
+  infoWrap: {
+    justifyContent: "center",
+    alignItems: "flex-start",
+    padding: 30
+  },
+
+  infoType: {
+    fontSize: 25,
+    fontFamily: "BoldFont",
+    color: txCinzaEscuro,
+    textAlign: "left"
+  },
+
+  info: {
+    fontSize: 26,
+    color: btnAzul,
+    textAlign: "left"
   },
 
   btnWrap: {

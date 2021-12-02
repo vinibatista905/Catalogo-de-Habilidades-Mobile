@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import { btnAmarelo, btnAzul, txBranco, txPreto } from "../../../components/UI/variaveis";
+import { btnAmarelo, btnAzul, txBranco, txCinzaEscuro, txPreto } from "../../../components/UI/variaveis";
 import Navbar from "../../../components/navbar";
 import UserSkills from "../../../components/userSkills";
 import { useNavigation } from "@react-navigation/core";
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 20,
     marginBottom: 40,
+    color: txCinzaEscuro
   },
 
   wrap: {
