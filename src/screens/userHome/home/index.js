@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -13,9 +14,20 @@ import Navbar from "../../../components/navbar";
 import { bgCinza, txBranco } from "../../../components/UI/variaveis";
 import { HomeData } from "../../../utils/data";
 
-function Home(params) {
+function Home() {
 
-  console.log(HomeData);
+  const userId = 1;
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://192.168.2.125:5000/user/info/${userId}`)
+      .then(({ data }) => {
+        setUser(data);
+
+        // eslint-disable-next-line
+      });
+  }, []);
   
   return (
     <>
@@ -29,7 +41,9 @@ function Home(params) {
                 source={require("../../../assets/welcome-1.png")}
               />
               <Text style={styles.welcomeText}>Seja Bem Vindo(a)</Text>
-              <Text style={styles.welcomeText}>Nome</Text>
+              {user?.map((user) => (
+              <Text style={styles.welcomeText}>{user.name}</Text>
+              ))}
               <Text style={styles.welcomeInfo}>
                 O que você quer fazer hoje?
               </Text>

@@ -30,7 +30,7 @@ export default function UserProjectsCards({name, manager, startDate, conclusionD
 const styles = StyleSheet.create({
     projectCard: {
         width: 320,
-        height: 500,
+        height: 520,
         backgroundColor: txBranco,
         borderRadius: 12,
         borderColor: btnAmarelo,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
       projectName: {
         justifyContent: "center",
         alignItems: "center",
-        fontSize: 28,
+        fontSize: 30,
         fontFamily: "BoldFont",
         textAlign: "center",
         color: btnAzul,
@@ -63,10 +63,10 @@ const styles = StyleSheet.create({
       info: {
         justifyContent: "center",
         alignItems: "center",
-        fontSize: 15,
+        fontSize: 18,
         fontFamily: "BoldFont",
-        textAlign: "center",
-        color: txCinzaEscuro
+        textAlign: "left",
+        color: txCinzaEscuro,
       },  
 
       skillsWrap: {
