@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     padding: 10,
-    marginTop: 30,
+    marginTop: 50,
   },
 
   logo: {
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 10,
-    marginTop: 30,
+    marginTop: 48,
   },
 
   image: {
