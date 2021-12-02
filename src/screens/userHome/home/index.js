@@ -13,21 +13,35 @@ import HomeItem from "../../../components/homeItem";
 import Navbar from "../../../components/navbar";
 import { bgCinza, txBranco } from "../../../components/UI/variaveis";
 import { HomeData } from "../../../utils/data";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 function Home() {
 
-  const userId = 1;
-  const [user, setUser] = useState([]);
+  const [userID, setUserID] = useState("");
+  const [userInfo, setUserInfo] = useState([]);
 
   useEffect(() => {
+    getUserId();
     axios
-      .get(`http://192.168.2.125:5000/user/info/${userId}`)
-      .then(({ data }) => {
-        setUser(data);
+    .get(`http://192.168.2.125:5000/user/info/${userID}`)
+    .then(({ data }) => {
+      setUserInfo(data);
+      
+      // eslint-disable-next-line
+    });
 
-        // eslint-disable-next-line
-      });
   }, []);
+
+  const getUserId = async () => {
+    const getId = await AsyncStorage.getItem('user_id');
+
+    if (!!getId) {
+      setUserID(getId);
+      console.log(userID);
+    }
+  }
+
   
   return (
     <>
@@ -41,7 +55,7 @@ function Home() {
                 source={require("../../../assets/welcome-1.png")}
               />
               <Text style={styles.welcomeText}>Seja Bem Vindo(a)</Text>
-              {user?.map((user) => (
+              {userInfo?.map((user) => (
               <Text style={styles.welcomeText}>{user.name}</Text>
               ))}
               <Text style={styles.welcomeInfo}>

@@ -19,16 +19,16 @@ const AppRoutes = () => {
 
     return (
         <AppStack.Navigator>
-                <AppStack.Screen name="Home" component={Home} options={{headerShown: false}} />
-                <AppStack.Screen name="AddSkills" component={AddSkills} options={{headerShown: false}} />
-                <AppStack.Screen name="AllSkills" component={AllSkills} options={{headerShown: false}} />
-                <AppStack.Screen name="EditSkills" component={EditSkills} options={{headerShown: false}} />
-                <AppStack.Screen name="AllUsers" component={AllUsers} options={{headerShown: false}} />
-                <AppStack.Screen name="AddProjects" component={AddProjects} options={{headerShown: false}} />
-                <AppStack.Screen name="AllProjects" component={AllProjects} options={{headerShown: false}} />
-                <AppStack.Screen name="EditProjects" component={EditProjects} options={{headerShown: false}} />
-                <AppStack.Screen name="Profile" component={Profile} options={{headerShown: false}} />
-                <AppStack.Screen name="EditProfile" component={EditProfile} options={{headerShown: false}} />
+            <AppStack.Screen name="Home" component={Home} options={{headerShown: false}} />
+            <AppStack.Screen name="AddSkills" component={AddSkills} options={{headerShown: false}} />
+            <AppStack.Screen name="AllSkills" component={AllSkills} options={{headerShown: false}} />
+            <AppStack.Screen name="EditSkills" component={EditSkills} options={{headerShown: false}} />
+            <AppStack.Screen name="AllUsers" component={AllUsers} options={{headerShown: false}} />
+            <AppStack.Screen name="AddProjects" component={AddProjects} options={{headerShown: false}} />
+            <AppStack.Screen name="AllProjects" component={AllProjects} options={{headerShown: false}} />
+            <AppStack.Screen name="EditProjects" component={EditProjects} options={{headerShown: false}} />
+            <AppStack.Screen name="Profile" component={Profile} options={{headerShown: false}} />
+            <AppStack.Screen name="EditProfile" component={EditProfile} options={{headerShown: false}} />
         </AppStack.Navigator>
     )  
 }

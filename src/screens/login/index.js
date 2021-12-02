@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import AuthContext from "../../contexts/auth";
+import AuthContext, { useAuth } from "../../contexts/auth";
 import Icon from "react-native-vector-icons/Ionicons";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -24,23 +24,9 @@ import {
 
 function Login() {
   const navigation = useNavigation();
+  const {login} = useAuth();
 
-  const { logged } = useContext(AuthContext);
 
-  const login = async (values) => {
-    console.log(values);
-    await axios
-      .post("http://192.168.2.125:5000/user/login", values)
-      .then((resp) => {
-        const data = resp.data;
-        if (data) {
-          console.log(data);
-          // AsyncStorage.setItem("auth_token", data.auth_token);
-          // AsyncStorage.setItem("user_id", data.user_id);
-          // navigation.push("Home");
-        }
-      });
-  };
 
   return (
     <>

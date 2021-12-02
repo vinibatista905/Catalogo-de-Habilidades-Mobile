@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView } from "react-native";
 import {
   btnAmarelo,
@@ -15,6 +16,8 @@ import { useNavigation } from "@react-navigation/core";
 
 export default function AllSkills() {
   const navigation = useNavigation();
+  const startReload = ()=> RNRestart.Restart();
+
   const userId = 1;
 
   const [userInfo, setUserInfo] = useState([]);
@@ -94,9 +97,12 @@ export default function AllSkills() {
             <TouchableOpacity
               activeOpacity={0.75}
               style={styles.btn1}
-              onPress={() => navigation.push("AddSkills")}
+              onPress={() => {
+                AsyncStorage.clear();
+              
+              }}
             >
-              <Text style={styles.btnText1}>Adicionar</Text>
+              <Text style={styles.btnText1}>Sair</Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.75}
