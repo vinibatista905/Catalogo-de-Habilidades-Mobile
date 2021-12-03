@@ -1,10 +1,27 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native'
 import { btnAmarelo, btnAzul, txBranco, txCinzaEscuro } from '../UI/variaveis';
 
 export default function UserProjectsCards({name, manager, startDate, conclusionDate, skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8}) {
+
+  const removeProject = () => {
+    Alert.alert(
+      "Alert Title",
+      "My Alert Msg",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+    );
+    }
+  
+
     return (
-        <View style={styles.projectCard}>
+        <TouchableOpacity onPress={removeProject} activeOpacity={0.5} style={styles.projectCard}>
             <View style={styles.wrap}>
             <Image source={require("../../assets/project-3.png")} style={styles.image} />
             <Text style={styles.projectName}>{name}</Text>
@@ -23,7 +40,7 @@ export default function UserProjectsCards({name, manager, startDate, conclusionD
             {skill8 === null ? null : <View style={styles.skillTag}><Text style={styles.skill}>{skill8}</Text></View>}
             </View>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 

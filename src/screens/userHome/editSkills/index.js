@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
 
   skillsSection: {
-    height: 520,
+    height: 1350,
     justifyContent: "center",
     alignItems: "center",
   },

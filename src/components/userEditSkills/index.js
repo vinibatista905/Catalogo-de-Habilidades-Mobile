@@ -2,7 +2,7 @@ import React from "react";
 import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import  EditIcon  from "react-native-vector-icons/FontAwesome5";
 import  DeleteIcon  from "react-native-vector-icons/MaterialIcons";
-import { btnVerde, txBranco, txCinzaEscuro, txVermelho } from "../UI/variaveis";
+import { btnAmarelo, btnVerde, txBranco, txCinzaEscuro, txVermelho } from "../UI/variaveis";
 
 export default function UserEditSkills({ type, name, level }) {
   
@@ -33,7 +33,8 @@ const styles = StyleSheet.create({
     alignContent: "center",
     borderRadius: 12,
     margin: 15,
-    
+    borderColor: btnAmarelo,
+    borderWidth: 1
   },
 
   wrap: {

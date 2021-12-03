@@ -1,6 +1,8 @@
 import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useAuth } from '../../contexts/auth';
+
 import {
   Text,
   StyleSheet,
@@ -14,12 +16,12 @@ import { bgAzul, txBranco } from "../UI/variaveis";
 export default function Navbar() {
   const navigation = useNavigation();
 
-  const userId = 1;
+  const {user_id} = useAuth();
   const [userProfile, setUserProfile] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`http://192.168.2.125:5000/user/check_profile/${userId}`)
+      .get(`http://192.168.2.125:5000/user/check_profile/${user_id}`)
       .then(({ data }) => {
         setUserProfile(data);
 

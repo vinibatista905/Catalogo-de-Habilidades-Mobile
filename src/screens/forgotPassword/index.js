@@ -161,6 +161,8 @@ const styles = StyleSheet.create({
   formDesc: {
     fontSize: 20,
     fontFamily: "BoldFont",
+    marginBottom: 10
+
   },
 
   input: {

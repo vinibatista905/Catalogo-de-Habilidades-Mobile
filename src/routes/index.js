@@ -8,6 +8,7 @@ import AppRoutes from './app.routes'
 const Routes = () => {
 
     const {logged} = useAuth();
+    
 
     return (
         <NavigationContainer>

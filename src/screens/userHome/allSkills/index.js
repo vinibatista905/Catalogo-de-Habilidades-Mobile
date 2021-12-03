@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
 
   skillsSection: {
-    height: 520,
+    height: 1220,
     justifyContent: "center",
     alignItems: "center",
   },

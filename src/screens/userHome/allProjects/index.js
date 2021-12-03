@@ -83,9 +83,11 @@ const styles = StyleSheet.create({
   },
 
   projectsSection: {
-    height: 500,
+    height: 3800,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: bgCinza,
+
   },
 
   title: {
@@ -95,7 +97,7 @@ const styles = StyleSheet.create({
     fontFamily: "BoldFont",
     textAlign: "center",
     padding: 20,
-    marginBottom: 40,
+    marginBottom: 20,
     color: txCinzaEscuro,
   },
 
@@ -118,6 +120,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingTop: 20,
+    backgroundColor: bgCinza,
+
   },
 
   btn1: {

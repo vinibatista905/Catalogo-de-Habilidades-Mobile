@@ -13,36 +13,23 @@ import HomeItem from "../../../components/homeItem";
 import Navbar from "../../../components/navbar";
 import { bgCinza, txBranco } from "../../../components/UI/variaveis";
 import { HomeData } from "../../../utils/data";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { useAuth } from "../../../contexts/auth";
 
 function Home() {
+  const { user_id } = useAuth();
 
-  const [userID, setUserID] = useState("");
   const [userInfo, setUserInfo] = useState([]);
 
   useEffect(() => {
-    getUserId();
     axios
-    .get(`http://192.168.2.125:5000/user/info/${userID}`)
-    .then(({ data }) => {
-      setUserInfo(data);
-      
-      // eslint-disable-next-line
-    });
+      .get(`http://192.168.2.125:5000/user/info/${user_id}`)
+      .then(({ data }) => {
+        setUserInfo(data);
 
+        // eslint-disable-next-line
+      });
   }, []);
 
-  const getUserId = async () => {
-    const getId = await AsyncStorage.getItem("user_id");
-
-    if (!!getId) {
-      setUserID(getId);
-      console.log(userID);
-    }
-  }
-
-  
   return (
     <>
       <ScrollView>
@@ -56,7 +43,7 @@ function Home() {
               />
               <Text style={styles.welcomeText}>Seja Bem Vindo(a)</Text>
               {userInfo?.map((user) => (
-              <Text style={styles.welcomeText}>{user.name}</Text>
+                <Text style={styles.welcomeText}>{user.name}</Text>
               ))}
               <Text style={styles.welcomeInfo}>
                 O que você quer fazer hoje?

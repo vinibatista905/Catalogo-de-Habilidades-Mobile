@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, StyleSheet, View } from "react-native";
-import { txBranco, txCinzaEscuro } from "../UI/variaveis";
+import { btnAmarelo, txBranco, txCinzaEscuro } from "../UI/variaveis";
 
 export default function UserSkills({ type, name, level }) {
   
@@ -27,6 +27,8 @@ const styles = StyleSheet.create({
     alignContent: "center",
     borderRadius: 12,
     margin: 15,
+    borderColor: btnAmarelo,
+    borderWidth: 1
   },
 
   wrap: {

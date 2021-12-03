@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     color: txBranco,
+    textAlign: "center"
   },
 
   loginImage: {
@@ -189,6 +190,8 @@ const styles = StyleSheet.create({
   formDesc: {
     fontSize: 20,
     fontFamily: "BoldFont",
+    marginBottom: 10
+
   },
 
   input: {

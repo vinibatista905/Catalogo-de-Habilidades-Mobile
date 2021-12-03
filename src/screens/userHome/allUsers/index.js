@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
 
   section: {
-    height: 550,
+    height: 1350,
     justifyContent: "center",
     alignItems: "center",
   },

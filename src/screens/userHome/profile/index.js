@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView } from "react-native";
 import {
   btnAmarelo,
@@ -13,18 +12,21 @@ import LinkedinIcon from "react-native-vector-icons/AntDesign";
 import GithubIcon from "react-native-vector-icons/AntDesign";
 import Navbar from "../../../components/navbar";
 import { useNavigation } from "@react-navigation/core";
+import { useAuth } from "../../../contexts/auth";
+
 
 export default function AllSkills() {
   const navigation = useNavigation();
-  const startReload = ()=> RNRestart.Restart();
 
-  const userId = 1;
+
+  const { user_id } = useAuth();
+
 
   const [userInfo, setUserInfo] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`http://192.168.2.125:5000/user/info/${userId}`)
+      .get(`http://192.168.2.125:5000/user/info/${user_id}`)
       .then(({ data }) => {
         setUserInfo(data);
         // eslint-disable-next-line
@@ -35,7 +37,7 @@ export default function AllSkills() {
 
   useEffect(() => {
     axios
-      .get(`http://192.168.2.125:5000/user/check_profile/${userId}`)
+      .get(`http://192.168.2.125:5000/user/check_profile/${user_id}`)
       .then(({ data }) => {
         setUserProfile(data);
         console.log(data);
