@@ -6,14 +6,33 @@ const AuthContext = createContext({
   logged: false,
   setLogged: () => {},
   token: "",
-  user: {},
+  user_id: "",
   login: (values) => {},
 });
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(false);
   const [token, setToken] = useState("");
+  const [userID, setUserID] = useState("");
 
+  const login = async (values) => {
+    console.log(values);
+    await axios
+      .post("http://192.168.2.125:5000/user/login", values)
+      .then(async (resp) => {
+        const data = resp.data;
+        if (data) {
+          console.log(data);
+          setToken(data.auth_token);
+          const stringID = String(data.user_id);
+          console.log(stringID);
+          setUserID(stringID);
+          setAuth(true);
+          await AsyncStorage.setItem("auth_token", data.auth_token);
+          await AsyncStorage.setItem("user_id", stringID);
+        }
+      });
+  };
 
   useEffect(() => {
     getIsLogged();
@@ -29,25 +48,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async (values) => {
-    console.log(values);
-    await axios
-      .post("http://192.168.2.125:5000/user/login", values)
-      .then(async (resp) => {
-        const data = resp.data;
-        if (data) {
-          console.log(data);
-          setToken(data.auth_token);
-          setAuth(true);
-          await AsyncStorage.setItem("auth_token", data.auth_token);
-          await AsyncStorage.setItem("user_id", data.user_id);
-        }
-      });
-  };
-
   return (
     <AuthContext.Provider
-      value={{ logged: auth, setLogged: setAuth, auth_token: token, user_id: {}, login }}
+      value={{ logged: auth, setLogged: setAuth, auth_token: token, user_id: userID, login }}
     >
       {children}
     </AuthContext.Provider>

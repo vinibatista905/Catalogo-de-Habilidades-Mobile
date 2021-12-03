@@ -34,7 +34,7 @@ function Home() {
   }, []);
 
   const getUserId = async () => {
-    const getId = await AsyncStorage.getItem('user_id');
+    const getId = await AsyncStorage.getItem("user_id");
 
     if (!!getId) {
       setUserID(getId);
