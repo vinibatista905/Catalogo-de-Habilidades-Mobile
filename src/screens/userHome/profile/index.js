@@ -10,7 +10,7 @@ import {
 } from "../../../components/UI/variaveis";
 import LinkedinIcon from "react-native-vector-icons/AntDesign";
 import GithubIcon from "react-native-vector-icons/AntDesign";
-import Navbar from "../../../components/navbar";
+import Header from "../../../components/header";
 import { useNavigation } from "@react-navigation/core";
 import { useAuth } from "../../../contexts/auth";
 
@@ -50,7 +50,7 @@ export default function AllSkills() {
     <>
     <ScrollView>
       <View style={styles.container}>
-        <Navbar />
+        <Header />
 
         <View style={styles.profileSection}>
           {userProfile?.map((profile) => (

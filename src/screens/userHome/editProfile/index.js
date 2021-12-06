@@ -3,7 +3,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Formik } from "formik";
 import { useNavigation } from "@react-navigation/core";
-import Navbar from "../../../components/navbar";
+import Header from "../../../components/header";
 import {
   Image,
   Text,
@@ -58,7 +58,7 @@ function EditProfile() {
     <>
       <ScrollView>
         <View style={styles.loginContainer}>
-          <Navbar />
+          <Header />
           <View style={styles.imageSection}>
             <Image
               style={styles.loginImage}

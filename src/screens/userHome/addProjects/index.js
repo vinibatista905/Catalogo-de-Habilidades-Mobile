@@ -3,7 +3,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Formik } from "formik";
 import { useNavigation } from "@react-navigation/core";
-import Navbar from "../../../components/navbar";
+import Header from "../../../components/header";
 
 import {
   Image,
@@ -20,6 +20,7 @@ import {
   btnAmarelo,
   btnAzul,
   txBranco,
+  txCinzaEscuro,
   txPreto,
 } from "../../../components/UI/variaveis";
 
@@ -43,7 +44,7 @@ export default function AddSkills() {
     <>
       <ScrollView>
         <View style={styles.container}>
-          <Navbar />
+          <Header />
           <View style={styles.imageSection}>
             <Image
               style={styles.image}
@@ -128,6 +129,7 @@ const styles = StyleSheet.create({
     fontFamily: "BoldFont",
     textAlign: "center",
     marginBottom: 10,
+    color: txCinzaEscuro
   },
 
   form: {
@@ -145,6 +147,8 @@ const styles = StyleSheet.create({
   formDesc: {
     fontSize: 20,
     fontFamily: "BoldFont",
+    marginBottom: 10
+
   },
 
   input: {

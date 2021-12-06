@@ -17,7 +17,7 @@ import {
   txCinzaEscuro,
   txPreto,
 } from "../../../components/UI/variaveis";
-import Navbar from "../../../components/navbar";
+import Header from "../../../components/header";
 import { useNavigation } from "@react-navigation/core";
 import UserProjectsCards from "../../../components/userProjectsCards";
 
@@ -42,7 +42,7 @@ export default function AllSkills() {
   return (
     <>
       <View style={styles.container}>
-        <Navbar />
+        <Header />
 
         <Text style={styles.title}>Clique em um projeto para removê-lo</Text>
         <View style={styles.projectsSection}>

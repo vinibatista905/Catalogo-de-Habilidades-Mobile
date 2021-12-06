@@ -8,12 +8,14 @@ import {
   Image,
   SafeAreaView,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
 import HomeItem from "../../../components/homeItem";
 import Navbar from "../../../components/navbar";
-import { bgCinza, txBranco } from "../../../components/UI/variaveis";
+import { bgCinza, btnAzul, txBranco } from "../../../components/UI/variaveis";
 import { HomeData } from "../../../utils/data";
 import { useAuth } from "../../../contexts/auth";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Home() {
   const { user_id } = useAuth();
@@ -48,6 +50,7 @@ function Home() {
               <Text style={styles.welcomeInfo}>
                 O que você quer fazer hoje?
               </Text>
+              <TouchableOpacity onPress={()=>{AsyncStorage.clear()}} style={styles.button}><Text style={styles.btnText} >Sair</Text></TouchableOpacity>
             </View>
           </View>
 
@@ -104,6 +107,21 @@ const styles = StyleSheet.create({
     fontFamily: "RegularFont",
     fontSize: 20,
     marginTop: 40,
+  },
+
+  button: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: btnAzul,
+    width: 100,
+    height: 50,
+    borderRadius: 12,
+    marginTop: 30
+  },
+
+  btnText: {
+   color: txBranco,
+   fontSize: 25
   },
 });
 

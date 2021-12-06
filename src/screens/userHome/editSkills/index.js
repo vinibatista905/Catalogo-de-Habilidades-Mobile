@@ -8,7 +8,7 @@ import {
   FlatList,
 } from "react-native";
 import { btnAzul, txBranco, txCinzaEscuro } from "../../../components/UI/variaveis";
-import Navbar from "../../../components/navbar";
+import Header from "../../../components/header";
 import UserEditSkills from "../../../components/userEditSkills";
 import { useNavigation } from "@react-navigation/core";
 
@@ -34,7 +34,7 @@ export default function AllSkills() {
   return (
     <>
       <View style={styles.container}>
-        <Navbar />
+        <Header />
 
         <Text style={styles.title}>Edite suas habilidades</Text>
         <View style={styles.skillsSection}>

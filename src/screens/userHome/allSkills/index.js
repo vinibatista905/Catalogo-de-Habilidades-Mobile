@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import { btnAmarelo, btnAzul, txBranco, txCinzaEscuro, txPreto } from "../../../components/UI/variaveis";
-import Navbar from "../../../components/navbar";
+import { btnAmarelo, btnAzul, txBranco, txCinza, txCinzaEscuro, txPreto } from "../../../components/UI/variaveis";
+import Header from "../../../components/header";
 import UserSkills from "../../../components/userSkills";
 import { useNavigation } from "@react-navigation/core";
 
@@ -34,7 +34,7 @@ export default function AllSkills() {
   return (
     <>
       <View style={styles.container}>
-        <Navbar />
+        <Header />
 
         <Text style={styles.title}>Essas são as suas habilidades</Text>
         <View style={styles.skillsSection}>
@@ -72,12 +72,15 @@ export default function AllSkills() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: txCinza
   },
 
   skillsSection: {
-    height: 1220,
+    height: 520,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: txCinza
+
   },
 
   title: {

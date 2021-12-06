@@ -7,7 +7,7 @@ import {
   FlatList,
 } from "react-native";
 import { btnAmarelo, btnAzul, txBranco, txCinzaEscuro, txPreto } from "../../../components/UI/variaveis";
-import Navbar from "../../../components/navbar";
+import Header from "../../../components/header";
 import { useNavigation } from "@react-navigation/core";
 import AllUsers from "../../../components/allUsers";
 
@@ -32,7 +32,7 @@ export default function AllSkills() {
   return (
     <>
       <View style={styles.container}>
-        <Navbar />
+        <Header />
 
         <Text style={styles.title}>Esses são todos os usuários</Text>
         <View style={styles.section}>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
 
   section: {
-    height: 1350,
+    height: 550,
     justifyContent: "center",
     alignItems: "center",
   },

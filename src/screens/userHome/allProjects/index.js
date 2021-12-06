@@ -10,14 +10,13 @@ import {
 } from "react-native";
 import {
   bgCinza,
-  bgCinzaEscuro,
   btnAmarelo,
   btnAzul,
   txBranco,
   txCinzaEscuro,
   txPreto,
 } from "../../../components/UI/variaveis";
-import Navbar from "../../../components/navbar";
+import Header from "../../../components/header";
 import { useNavigation } from "@react-navigation/core";
 import UserProjectsCards from "../../../components/userProjectsCards";
 
@@ -42,7 +41,7 @@ export default function AllSkills() {
   return (
     <>
       <View style={styles.container}>
-        <Navbar />
+        <Header />
 
         <Text style={styles.title}>Esses são os seus projetos</Text>
         <View style={styles.projectsSection}>
@@ -83,7 +82,7 @@ const styles = StyleSheet.create({
   },
 
   projectsSection: {
-    height: 3800,
+    height: 520,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: bgCinza,
@@ -97,7 +96,7 @@ const styles = StyleSheet.create({
     fontFamily: "BoldFont",
     textAlign: "center",
     padding: 20,
-    marginBottom: 20,
+    marginBottom: 40,
     color: txCinzaEscuro,
   },
 
