@@ -18,9 +18,7 @@ import { useAuth } from "../../../contexts/auth";
 export default function AllSkills() {
   const navigation = useNavigation();
 
-
   const { user_id } = useAuth();
-
 
   const [userInfo, setUserInfo] = useState([]);
 

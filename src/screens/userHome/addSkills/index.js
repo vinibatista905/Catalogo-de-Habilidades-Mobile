@@ -30,7 +30,7 @@ export default function AddSkills() {
   const navigation = useNavigation();
 
 
-  const login = async (values) => {
+  const addSkill = async (values) => {
     console.log(values);
     await axios
       .post("http://192.168.2.125:5000/user/create_skill", values)
@@ -60,7 +60,7 @@ export default function AddSkills() {
               Adicione uma habilidade no seu catálogo
             </Text>
 
-            <Formik initialValues={{}} onSubmit={(values) => login(values)}>
+            <Formik initialValues={{}} onSubmit={(values) => addSkill(values)}>
               {({ handleChange, handleBlur, handleSubmit, values }) => (
                 <View style={styles.form}>
                   <View style={styles.descWrap}>

@@ -4,13 +4,10 @@ import {
   Text,
   View,
   StyleSheet,
-  TouchableOpacity,
-  ScrollView,
   FlatList,
 } from "react-native";
 import {
   bgCinza,
-  bgCinzaEscuro,
   btnAmarelo,
   btnAzul,
   txBranco,
@@ -19,17 +16,19 @@ import {
 } from "../../../components/UI/variaveis";
 import Header from "../../../components/header";
 import { useNavigation } from "@react-navigation/core";
-import UserProjectsCards from "../../../components/userProjectsCards";
+import EditProjectsCards from "../../../components/editProjectCards";
+import { useAuth } from "../../../contexts/auth";
+
 
 export default function AllSkills() {
   const navigation = useNavigation();
 
-  const userId = 1;
+  const { user_id } = useAuth();
   const [userProjects, setUserProjects] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`http://192.168.2.125:5000/user/check_project/${userId}`)
+      .get(`http://192.168.2.125:5000/user/check_project/${user_id}`)
       .then(({ data }) => {
         setUserProjects(data);
 
@@ -49,7 +48,7 @@ export default function AllSkills() {
           <View style={styles.wrap}>
             <FlatList
               data={projectData}
-              renderItem={({ item }) => <UserProjectsCards {...item} />}
+              renderItem={({ item }) => <EditProjectsCards {...item} />}
               keyExtractor={(item) => item.id}
             />
           </View>

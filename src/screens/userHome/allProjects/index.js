@@ -19,16 +19,19 @@ import {
 import Header from "../../../components/header";
 import { useNavigation } from "@react-navigation/core";
 import UserProjectsCards from "../../../components/userProjectsCards";
+import { useAuth } from "../../../contexts/auth";
+
 
 export default function AllSkills() {
   const navigation = useNavigation();
 
-  const userId = 1;
+  const { user_id } = useAuth();
+
   const [userProjects, setUserProjects] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`http://192.168.2.125:5000/user/check_project/${userId}`)
+      .get(`http://192.168.2.125:5000/user/check_project/${user_id}`)
       .then(({ data }) => {
         setUserProjects(data);
 
@@ -61,6 +64,7 @@ export default function AllSkills() {
             >
               <Text style={styles.btnText1}>Adicionar</Text>
             </TouchableOpacity>
+
             <TouchableOpacity
               activeOpacity={0.75}
               style={styles.btn2}
@@ -82,7 +86,7 @@ const styles = StyleSheet.create({
   },
 
   projectsSection: {
-    height: 520,
+    height: 500,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: bgCinza,

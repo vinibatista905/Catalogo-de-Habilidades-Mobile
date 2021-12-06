@@ -24,7 +24,7 @@ import {
   txPreto,
 } from "../../../components/UI/variaveis";
 
-export default function AddSkills() {
+export default function AddProjects() {
   const navigation = useNavigation();
 
   const login = async (values) => {

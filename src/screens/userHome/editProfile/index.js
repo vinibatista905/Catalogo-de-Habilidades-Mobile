@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Formik } from "formik";
 import { useNavigation } from "@react-navigation/core";
+import { useAuth } from "../../../contexts/auth";
 import Header from "../../../components/header";
 import {
   Image,
@@ -24,14 +24,14 @@ import {
 
 function EditProfile() {
   const navigation = useNavigation();
-  const userId = 1;
+  const { user_id } = useAuth();
 
   const [userProfile, setUserProfile] = useState([]);
 
   //PEGAR OS DADOS DO PERFIL PARA MOSTRAR NOS CAMPOS DO FORMULÁRIO INICIALMENTE
   useEffect(() => {
     axios
-      .get(`http://192.168.2.125:5000/user/check_profile/${userId}`)
+      .get(`http://192.168.2.125:5000/user/check_profile/${user_id}`)
       .then(({ data }) => {
         setUserProfile(data);
         console.log(data);
@@ -44,7 +44,7 @@ function EditProfile() {
   const login = async (values) => {
     console.log(values);
     await axios
-      .put(`http://192.168.2.125:5000/user/update_profile/${userId}`, values)
+      .put(`http://192.168.2.125:5000/user/update_profile/${user_id}`, values)
       .then((resp) => {
         const data = resp.data;
         if (data) {
