@@ -54,15 +54,6 @@ export default function AllSkills() {
             />
           </View>
 
-          <View style={styles.btnWrap}>
-            <TouchableOpacity
-              activeOpacity={0.75}
-              style={styles.btn1}
-              onPress={() => navigation.push("AddProjects")}
-            >
-              <Text style={styles.btnText1}>Adicionar</Text>
-            </TouchableOpacity>
-          </View>
         </View>
       </View>
     </>
@@ -76,7 +67,7 @@ const styles = StyleSheet.create({
   },
 
   projectsSection: {
-    height: 3800,
+    height: 540,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: bgCinza,
@@ -90,7 +81,7 @@ const styles = StyleSheet.create({
     fontFamily: "BoldFont",
     textAlign: "center",
     padding: 20,
-    marginBottom: 20,
+    marginBottom: 10,
     color: txCinzaEscuro,
   },
 

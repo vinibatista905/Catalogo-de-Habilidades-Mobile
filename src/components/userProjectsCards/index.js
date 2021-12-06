@@ -6,15 +6,15 @@ export default function UserProjectsCards({name, manager, startDate, conclusionD
 
   const removeProject = () => {
     Alert.alert(
-      "Alert Title",
-      "My Alert Msg",
+      "Remover Projeto",
+      "Deseja remover esse projeto?",
       [
+        { text: "OK", onPress: () => console.log("OK Pressed") },
         {
-          text: "Cancel",
+          text: "Cancelar",
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel"
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed") }
+        }
       ]
     );
     }

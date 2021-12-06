@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Formik } from "formik";
 import { useNavigation } from "@react-navigation/core";
 import Header from "../../../components/header";
-
+import { Picker } from "@react-native-picker/picker";
 import {
   Image,
   Text,
@@ -20,11 +20,15 @@ import {
   btnAmarelo,
   btnAzul,
   txBranco,
+  txCinza,
+  txCinzaEscuro,
   txPreto,
 } from "../../../components/UI/variaveis";
 
+
 export default function AddSkills() {
   const navigation = useNavigation();
+
 
   const login = async (values) => {
     console.log(values);
@@ -66,7 +70,7 @@ export default function AddSkills() {
                       onChangeText={handleChange("type")}
                       onBlur={handleBlur("type")}
                       value={values.type}
-                      placeholder="Tipo"
+                      placeholder="Ex: Front-End"
                       keyboardType="default"
                     />
                   </View>
@@ -77,7 +81,7 @@ export default function AddSkills() {
                       onChangeText={handleChange("skill")}
                       onBlur={handleBlur("skill")}
                       value={values.skill}
-                      placeholder="Habilidade"
+                      placeholder="Ex: CSS"
                       keyboardType="default"
                     />
                   </View>
@@ -89,7 +93,7 @@ export default function AddSkills() {
                       onBlur={handleBlur("level")}
                       value={values.level}
                       secureTextEntry={true}
-                      placeholder="Nível"
+                      placeholder="Ex: Básico"
                       keyboardType="default"
                     />
                   </View>
@@ -142,6 +146,7 @@ const styles = StyleSheet.create({
     height: 600,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: txCinza,
   },
 
   formTitle: {
@@ -151,6 +156,7 @@ const styles = StyleSheet.create({
     fontFamily: "BoldFont",
     textAlign: "center",
     padding: 20,
+    color: txCinzaEscuro,
   },
 
   form: {
@@ -168,6 +174,7 @@ const styles = StyleSheet.create({
   formDesc: {
     fontSize: 20,
     fontFamily: "BoldFont",
+    marginBottom: 10
   },
 
   input: {
@@ -175,7 +182,7 @@ const styles = StyleSheet.create({
     height: 60,
     fontSize: 20,
     fontFamily: "RegularFont",
-    backgroundColor: bgCinza,
+    backgroundColor: txBranco,
     borderRadius: 15,
     padding: 10,
   },
@@ -197,7 +204,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 10,
     marginTop: 15,
-    marginRight: 20
+    marginRight: 20,
   },
 
   checkBtn: {
@@ -216,14 +223,14 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: "BoldFont",
     color: txBranco,
-    textAlign: "center"
+    textAlign: "center",
   },
 
   btnText2: {
     fontSize: 15,
     fontFamily: "BoldFont",
     color: txPreto,
-    textAlign: "center"
+    textAlign: "center",
   },
 
   register: {
