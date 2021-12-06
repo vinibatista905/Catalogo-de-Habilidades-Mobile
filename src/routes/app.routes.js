@@ -3,6 +3,7 @@ import Home from "../screens/userHome/home";
 import AddSkills from "../screens/userHome/addSkills";
 import AllSkills from "../screens/userHome/allSkills";
 import EditSkills from "../screens/userHome/editSkills";
+import EditSpecSkill from "../screens/userHome/editSkills/editSpecSkill";
 import AllUsers from "../screens/userHome/allUsers";
 import AddProjects from "../screens/userHome/addProjects";
 import AllProjects from "../screens/userHome/allProjects";
@@ -23,6 +24,7 @@ const AppRoutes = () => {
             <AppStack.Screen name="AddSkills" component={AddSkills} options={{headerShown: false}} />
             <AppStack.Screen name="AllSkills" component={AllSkills} options={{headerShown: false}} />
             <AppStack.Screen name="EditSkills" component={EditSkills} options={{headerShown: false}} />
+            <AppStack.Screen name="EditSpecSkill" component={EditSpecSkill} options={{headerShown: false}} />
             <AppStack.Screen name="AllUsers" component={AllUsers} options={{headerShown: false}} />
             <AppStack.Screen name="AddProjects" component={AddProjects} options={{headerShown: false}} />
             <AppStack.Screen name="AllProjects" component={AllProjects} options={{headerShown: false}} />

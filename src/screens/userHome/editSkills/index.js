@@ -11,18 +11,20 @@ import { btnAzul, txBranco, txCinzaEscuro } from "../../../components/UI/variave
 import Header from "../../../components/header";
 import UserEditSkills from "../../../components/userEditSkills";
 import { useNavigation } from "@react-navigation/core";
+import { useAuth } from "../../../contexts/auth";
+
 
 
 export default function AllSkills() {
 
   const navigation = useNavigation();
 
-  const userId = 1;
+  const { user_id } = useAuth();
   const [userSkills, setUserSkills] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`http://192.168.2.125:5000/user/check_skill/${userId}`)
+      .get(`http://192.168.2.125:5000/user/check_skill/${user_id}`)
       .then(({ data }) => {
         setUserSkills(data);
         console.log(data);
@@ -69,7 +71,7 @@ const styles = StyleSheet.create({
   },
 
   skillsSection: {
-    height: 1350,
+    height: 520,
     justifyContent: "center",
     alignItems: "center",
   },

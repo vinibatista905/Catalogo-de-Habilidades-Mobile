@@ -1,12 +1,19 @@
 import React from "react";
 import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
-import  EditIcon  from "react-native-vector-icons/FontAwesome5";
-import  DeleteIcon  from "react-native-vector-icons/MaterialIcons";
-import { btnAmarelo, btnVerde, txBranco, txCinzaEscuro, txVermelho } from "../UI/variaveis";
+import EditIcon from "react-native-vector-icons/FontAwesome5";
+import DeleteIcon from "react-native-vector-icons/MaterialIcons";
+import {
+  btnAmarelo,
+  btnVerde,
+  txBranco,
+  txCinzaEscuro,
+  txVermelho,
+} from "../UI/variaveis";
+import { useNavigation } from "@react-navigation/core";
 
-export default function UserEditSkills({ type, name, level }) {
-  
-    
+export default function UserEditSkills({ type, name, level, id }) {
+  const navigation = useNavigation();
+
   return (
     <>
       <View style={styles.card}>
@@ -15,10 +22,24 @@ export default function UserEditSkills({ type, name, level }) {
           <Text style={styles.type}>{name}</Text>
           <Text style={styles.type}>{level}</Text>
         </View>
-          <View style={styles.iconWrap}> 
-          <TouchableOpacity><EditIcon name="edit" size={25} style={styles.edit}></EditIcon></TouchableOpacity>
-          <TouchableOpacity><DeleteIcon name="delete" size={30} style={styles.delete}></DeleteIcon></TouchableOpacity>
-          </View>
+        <View style={styles.iconWrap}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("EditSpecSkill", {
+                skillId: id,
+              });
+            }}
+          >
+            <EditIcon name="edit" size={25} style={styles.edit}></EditIcon>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <DeleteIcon
+              name="delete"
+              size={30}
+              style={styles.delete}
+            ></DeleteIcon>
+          </TouchableOpacity>
+        </View>
       </View>
     </>
   );
@@ -34,13 +55,13 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     margin: 15,
     borderColor: btnAmarelo,
-    borderWidth: 1
+    borderWidth: 1,
   },
 
   wrap: {
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 15
+    paddingVertical: 15,
   },
 
   type: {
@@ -51,12 +72,10 @@ const styles = StyleSheet.create({
   },
 
   iconWrap: {
-    
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
-
 
   edit: {
     color: btnVerde,
@@ -68,6 +87,5 @@ const styles = StyleSheet.create({
     color: txVermelho,
     textAlign: "center",
     paddingHorizontal: 20,
-
   },
 });

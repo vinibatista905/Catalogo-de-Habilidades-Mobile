@@ -11,18 +11,20 @@ import { btnAmarelo, btnAzul, txBranco, txCinza, txCinzaEscuro, txPreto } from "
 import Header from "../../../components/header";
 import UserSkills from "../../../components/userSkills";
 import { useNavigation } from "@react-navigation/core";
+import { useAuth } from "../../../contexts/auth";
 
 
 export default function AllSkills() {
 
   const navigation = useNavigation();
 
-  const userId = 1;
+  const { user_id } = useAuth();
+
   const [userSkills, setUserSkills] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`http://192.168.2.125:5000/user/check_skill/${userId}`)
+      .get(`http://192.168.2.125:5000/user/check_skill/${user_id}`)
       .then(({ data }) => {
         setUserSkills(data);
         console.log(data);
