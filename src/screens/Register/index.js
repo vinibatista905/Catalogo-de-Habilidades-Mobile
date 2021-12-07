@@ -12,7 +12,7 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
-  Alert
+  Alert,
 } from "react-native";
 import {
   bgAzul,
@@ -24,10 +24,15 @@ import {
 
 const validations = yup.object().shape({
   name: yup.string().required("Nome é obrigatório"),
-  email: yup.string().email("Por favor insira um e-mail válido").required("E-mail é obrigatório"),
-  password: yup.string().min(6, ({ min }) => `Senha deve conter ao menos ${min} caracteres`).required("Senha é obrigatório"),
+  email: yup
+    .string()
+    .email("Por favor insira um e-mail válido")
+    .required("E-mail é obrigatório"),
+  password: yup
+    .string()
+    .min(6, ({ min }) => `Senha deve conter ao menos ${min} caracteres`)
+    .required("Senha é obrigatório"),
 });
-
 
 function Register() {
   const navigation = useNavigation();
@@ -43,10 +48,7 @@ function Register() {
           Alert.alert(
             "Registrado com sucesso!",
             "Faça login para acessar sua conta",
-            [
-              { text: "OK", onPress: () => navigation.push("Login") },
-              
-            ]
+            [{ text: "OK", onPress: () => navigation.push("Login") }]
           );
         }
       });
@@ -73,8 +75,19 @@ function Register() {
           <View style={styles.formSection}>
             <Text style={styles.formTitle}>Registrar-se</Text>
 
-            <Formik validationSchema={validations} initialValues={{}} onSubmit={(values) => register(values)}>
-              {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
+            <Formik
+              validationSchema={validations}
+              initialValues={{}}
+              onSubmit={(values) => register(values)}
+            >
+              {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                values,
+                errors,
+                isValid,
+              }) => (
                 <View style={styles.form}>
                   <View style={styles.descWrap}>
                     <Text style={styles.formDesc}>Nome*</Text>
@@ -87,9 +100,11 @@ function Register() {
                       placeholder="Nome"
                       keyboardType="default"
                     />
-                    {errors.name &&
-                    <Text style={{ fontSize: 15, color: 'red' }}>{errors.name}</Text>
-                    }
+                    {errors.name && (
+                      <Text style={{ fontSize: 15, color: "red" }}>
+                        {errors.name}
+                      </Text>
+                    )}
                   </View>
                   <View style={styles.descWrap}>
                     <Text style={styles.formDesc}>E-mail*</Text>
@@ -102,9 +117,11 @@ function Register() {
                       placeholder="E-mail"
                       keyboardType="email-address"
                     />
-                    {errors.email &&
-                    <Text style={{ fontSize: 15, color: 'red' }}>{errors.email}</Text>
-                    }
+                    {errors.email && (
+                      <Text style={{ fontSize: 15, color: "red" }}>
+                        {errors.email}
+                      </Text>
+                    )}
                   </View>
                   <View style={styles.descWrap}>
                     <Text style={styles.formDesc}>Senha*</Text>
@@ -118,17 +135,20 @@ function Register() {
                       placeholder="Senha"
                       keyboardType="default"
                     />
-                    {errors.password &&
-                    <Text style={{ fontSize: 15, color: 'red' }}>{errors.password}</Text>
-                    }
+                    {errors.password && (
+                      <Text style={{ fontSize: 15, color: "red" }}>
+                        {errors.password}
+                      </Text>
+                    )}
                   </View>
                   <TouchableOpacity
-                  activeOpacity={0.75}
+                    activeOpacity={0.75}
                     style={styles.loginBtn}
                     disabled={!isValid}
-                    onPress={handleSubmit}>
-                      <Text style={styles.btnText}>Registrar</Text>
-                      </TouchableOpacity>
+                    onPress={handleSubmit}
+                  >
+                    <Text style={styles.btnText}>Registrar</Text>
+                  </TouchableOpacity>
                 </View>
               )}
             </Formik>
@@ -167,7 +187,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    marginTop: 20
+    marginTop: 20,
   },
 
   title: {
@@ -183,7 +203,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     color: txBranco,
-    textAlign: "center"
+    textAlign: "center",
   },
 
   loginImage: {
@@ -219,8 +239,7 @@ const styles = StyleSheet.create({
   formDesc: {
     fontSize: 20,
     fontFamily: "BoldFont",
-    marginBottom: 10
-
+    marginBottom: 10,
   },
 
   input: {
@@ -242,7 +261,7 @@ const styles = StyleSheet.create({
     backgroundColor: btnAzul,
     borderRadius: 15,
     padding: 10,
-    marginTop: 15
+    marginTop: 15,
   },
 
   btnText: {

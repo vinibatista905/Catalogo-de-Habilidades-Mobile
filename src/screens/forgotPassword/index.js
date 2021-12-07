@@ -1,8 +1,8 @@
 import React from 'react'
 import Icon from "react-native-vector-icons/Ionicons";
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Formik } from "formik";
+import * as yup from "yup";
 import { useNavigation } from "@react-navigation/core";
 import {
   Image,
@@ -12,6 +12,7 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  Alert
 } from "react-native";
 import {
   bgAzul,
@@ -21,8 +22,31 @@ import {
   txBranco,
 } from "../../components/UI/variaveis";
 
+const validations = yup.object().shape({
+  email: yup.string().email("Por favor insira um e-mail válido").required("E-mail é obrigatório"),
+
+});
+
+
 export default function ForgotPassword() {
     const navigation = useNavigation();
+
+    const sendEmail = async (values) => {
+      console.log(values);
+      await axios
+        .post("http://192.168.2.125:5000/user/forgot_password", values)
+        .then((resp) => {
+          const data = resp.data;
+          if (data) {
+            console.log(data);
+            Alert.alert(
+              "Token enviado com sucesso!",
+              "Verifique seu e-mail para ter acesso ao token",
+              [{ text: "OK", onPress: () => navigation.push("ResetPassword") }]
+            );
+          }
+        });
+    };
 
     return (
         <>
@@ -46,12 +70,13 @@ export default function ForgotPassword() {
             <Text style={styles.formTitle}>Alterar Senha</Text>
             <Text style={styles.formMessage}>Insira seu e-mail e enviaremos um token para alterar a senha.</Text>
 
-            <Formik initialValues={{}} onSubmit={(values) => login(values)}>
-              {({ handleChange, handleBlur, handleSubmit, values }) => (
+            <Formik validationSchema={validations} initialValues={{}} onSubmit={(values) => sendEmail(values)}>
+              {({ handleChange, handleBlur, handleSubmit, values, errors,  }) => (
                 <View style={styles.form}>
                   <View style={styles.descWrap}>
                     <Text style={styles.formDesc}>E-mail*</Text>
                     <TextInput
+                      name="email"
                       style={styles.input}
                       onChangeText={handleChange("email")}
                       onBlur={handleBlur("email")}
@@ -59,6 +84,9 @@ export default function ForgotPassword() {
                       placeholder="E-mail"
                       keyboardType="email-address"
                     />
+                    {errors.email &&
+                    <Text style={{ fontSize: 15, color: 'red' }}>{errors.email}</Text>
+                    }
                   </View>
                   <TouchableOpacity
                   activeOpacity={0.75}
