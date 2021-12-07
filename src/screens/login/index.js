@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
-import AuthContext, { useAuth } from "../../contexts/auth";
+import React from "react";
+import { useAuth } from "../../contexts/auth";
 import Icon from "react-native-vector-icons/Ionicons";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Formik } from "formik";
+import * as yup from "yup";
 import { useNavigation } from "@react-navigation/core";
 import {
   Image,
@@ -22,11 +21,15 @@ import {
   txBranco,
 } from "../../components/UI/variaveis";
 
+const validations = yup.object().shape({
+  email: yup.string().email("Por favor insira um e-mail válido").required("E-mail é obrigatório"),
+  password: yup.string().min(6, ({ min }) => `Senha deve conter ao menos ${min} caracteres`).required("Senha é obrigatório"),
+});
+
+
 function Login() {
   const navigation = useNavigation();
   const {login} = useAuth();
-
-
 
   return (
     <>
@@ -49,12 +52,13 @@ function Login() {
           <View style={styles.formSection}>
             <Text style={styles.formTitle}>Login</Text>
 
-            <Formik initialValues={{}} onSubmit={(values) => login(values)}>
-              {({ handleChange, handleBlur, handleSubmit, values }) => (
+            <Formik validationSchema={validations} initialValues={{}} onSubmit={(values) => login(values)}>
+              {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                 <View style={styles.form}>
                   <View style={styles.descWrap}>
                     <Text style={styles.formDesc}>E-mail*</Text>
                     <TextInput
+                      name="email"
                       style={styles.input}
                       onChangeText={handleChange("email")}
                       onBlur={handleBlur("email")}
@@ -62,10 +66,14 @@ function Login() {
                       placeholder="E-mail"
                       keyboardType="email-address"
                     />
+                    {errors.email &&
+                    <Text style={{ fontSize: 15, color: 'red' }}>{errors.email}</Text>
+                    }
                   </View>
                   <View style={styles.descWrap}>
                     <Text style={styles.formDesc}>Senha*</Text>
                     <TextInput
+                      name="password"
                       style={styles.input}
                       onChangeText={handleChange("password")}
                       onBlur={handleBlur("password")}
@@ -74,11 +82,15 @@ function Login() {
                       placeholder="Senha"
                       keyboardType="default"
                     />
+                    {errors.password &&
+                    <Text style={{ fontSize: 15, color: 'red' }}>{errors.password}</Text>
+                    }
                   </View>
                   <Text style={styles.passwordLink} onPress={() => navigation.push("ForgotPassword")}>Esqueceu a senha?</Text>
                   <TouchableOpacity
                   activeOpacity={0.75}
                     style={styles.loginBtn}
+                    disabled={!isValid}
                     onPress={handleSubmit}>
                       <Text style={styles.btnText}>Login</Text>
                       </TouchableOpacity>
@@ -120,6 +132,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
+    marginTop: 15
   },
 
   title: {
@@ -143,7 +156,7 @@ const styles = StyleSheet.create({
   },
 
   formSection: {
-    height: 470,
+    height: 530,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -153,6 +166,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     fontSize: 40,
     fontFamily: "ExtraBold",
+    marginTop: 10
   },
 
   form: {
@@ -193,19 +207,20 @@ const styles = StyleSheet.create({
 
   loginBtn: {
     justifyContent: "center",
-    alignContent: "flex-end",
-    flexDirection: "row",
+    alignContent: "center",
+   
     width: 100,
     height: 45,
     backgroundColor: btnAzul,
     borderRadius: 15,
-    padding: 10,
+    
   },
 
   btnText: {
-    fontSize: 15,
+    fontSize: 18,
     fontFamily: "BoldFont",
     color: txBranco,
+    textAlign: "center"
   },
 
   registerWrap: {

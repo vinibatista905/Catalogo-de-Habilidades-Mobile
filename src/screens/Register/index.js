@@ -1,8 +1,8 @@
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Formik } from "formik";
+import * as yup from "yup";
 import { useNavigation } from "@react-navigation/core";
 import {
   Image,
@@ -12,6 +12,7 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  Alert
 } from "react-native";
 import {
   bgAzul,
@@ -21,10 +22,17 @@ import {
   txBranco,
 } from "../../components/UI/variaveis";
 
+const validations = yup.object().shape({
+  name: yup.string().required("Nome é obrigatório"),
+  email: yup.string().email("Por favor insira um e-mail válido").required("E-mail é obrigatório"),
+  password: yup.string().min(6, ({ min }) => `Senha deve conter ao menos ${min} caracteres`).required("Senha é obrigatório"),
+});
+
+
 function Register() {
   const navigation = useNavigation();
 
-  const login = async (values) => {
+  const register = async (values) => {
     console.log(values);
     await axios
       .post("http://192.168.2.125:5000/user/register", values)
@@ -32,7 +40,14 @@ function Register() {
         const data = resp.data;
         if (data) {
           console.log(data);
-          // navigation.push("Login");
+          Alert.alert(
+            "Registrado com sucesso!",
+            "Faça login para acessar sua conta",
+            [
+              { text: "OK", onPress: () => navigation.push("Login") },
+              
+            ]
+          );
         }
       });
   };
@@ -58,23 +73,28 @@ function Register() {
           <View style={styles.formSection}>
             <Text style={styles.formTitle}>Registrar-se</Text>
 
-            <Formik initialValues={{}} onSubmit={(values) => login(values)}>
-              {({ handleChange, handleBlur, handleSubmit, values }) => (
+            <Formik validationSchema={validations} initialValues={{}} onSubmit={(values) => register(values)}>
+              {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                 <View style={styles.form}>
                   <View style={styles.descWrap}>
                     <Text style={styles.formDesc}>Nome*</Text>
                     <TextInput
+                      name="name"
                       style={styles.input}
                       onChangeText={handleChange("name")}
                       onBlur={handleBlur("name")}
                       value={values.name}
                       placeholder="Nome"
-                      keyboardType="email-address"
+                      keyboardType="default"
                     />
+                    {errors.name &&
+                    <Text style={{ fontSize: 15, color: 'red' }}>{errors.name}</Text>
+                    }
                   </View>
                   <View style={styles.descWrap}>
                     <Text style={styles.formDesc}>E-mail*</Text>
                     <TextInput
+                      name="email"
                       style={styles.input}
                       onChangeText={handleChange("email")}
                       onBlur={handleBlur("email")}
@@ -82,10 +102,14 @@ function Register() {
                       placeholder="E-mail"
                       keyboardType="email-address"
                     />
+                    {errors.email &&
+                    <Text style={{ fontSize: 15, color: 'red' }}>{errors.email}</Text>
+                    }
                   </View>
                   <View style={styles.descWrap}>
                     <Text style={styles.formDesc}>Senha*</Text>
                     <TextInput
+                      name="password"
                       style={styles.input}
                       onChangeText={handleChange("password")}
                       onBlur={handleBlur("password")}
@@ -94,10 +118,14 @@ function Register() {
                       placeholder="Senha"
                       keyboardType="default"
                     />
+                    {errors.password &&
+                    <Text style={{ fontSize: 15, color: 'red' }}>{errors.password}</Text>
+                    }
                   </View>
                   <TouchableOpacity
                   activeOpacity={0.75}
                     style={styles.loginBtn}
+                    disabled={!isValid}
                     onPress={handleSubmit}>
                       <Text style={styles.btnText}>Registrar</Text>
                       </TouchableOpacity>
@@ -139,6 +167,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
+    marginTop: 20
   },
 
   title: {
@@ -163,7 +192,7 @@ const styles = StyleSheet.create({
   },
 
   formSection: {
-    height: 540,
+    height: 640,
     justifyContent: "center",
     alignItems: "center",
   },
