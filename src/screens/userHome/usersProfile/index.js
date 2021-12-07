@@ -12,7 +12,6 @@ import LinkedinIcon from "react-native-vector-icons/AntDesign";
 import GithubIcon from "react-native-vector-icons/AntDesign";
 import Header from "../../../components/header";
 import { useNavigation } from "@react-navigation/core";
-import { useAuth } from "../../../contexts/auth";
 
 
 export default function UsersProfile({ route }) {
@@ -89,6 +88,7 @@ export default function UsersProfile({ route }) {
                 <Text style={styles.infoType}>Time: <Text style={styles.info}> {profile.team}</Text></Text>
                 <Text style={styles.infoType}>Data de início: <Text style={styles.info}> {profile.startDate}</Text></Text>
                 <Text style={styles.infoType}>Celular: <Text style={styles.info}> {profile.phone}</Text></Text>
+                
               </View>
 
           </View>
@@ -99,7 +99,7 @@ export default function UsersProfile({ route }) {
               activeOpacity={0.75}
               style={styles.btn1}
               onPress={() => {
-                navigation.navigate("UsersSkill", {
+                navigation.navigate("UsersSkills", {
                   userSkillId: profile.idUser,
                 });
               }}

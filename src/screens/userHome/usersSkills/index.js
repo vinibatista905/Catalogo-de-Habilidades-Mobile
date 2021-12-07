@@ -7,71 +7,66 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import {
-  bgCinza,
-  btnAmarelo,
-  btnAzul,
-  txBranco,
-  txCinzaEscuro,
-  txPreto,
-} from "../../../components/UI/variaveis";
+import { btnAmarelo, btnAzul, txBranco, txCinza, txCinzaEscuro, txPreto } from "../../../components/UI/variaveis";
 import Header from "../../../components/header";
+import UserSkills from "../../../components/userSkills";
 import { useNavigation } from "@react-navigation/core";
-import UserProjectsCards from "../../../components/userProjectsCards";
-import { useAuth } from "../../../contexts/auth";
 
 
-export default function AllSkills() {
+export default function UsersSkills({ route }) {
+
   const navigation = useNavigation();
 
-  const { user_id } = useAuth();
+  const { userSkillId } = route.params;
+  
 
-  const [userProjects, setUserProjects] = useState([]);
+  const [userSkills, setUserSkills] = useState([]);
+  const [userInfo, setUserInfo] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`http://192.168.2.125:5000/user/check_project/${user_id}`)
+      .get(`http://192.168.2.125:5000/user/check_skill/${userSkillId}`)
       .then(({ data }) => {
-        setUserProjects(data);
+        setUserSkills(data);
+        console.log(data);
 
         // eslint-disable-next-line
       });
   }, []);
 
-  const projectData = userProjects.Projects;
+  useEffect(() => {
+    axios
+      .get(`http://192.168.2.125:5000/user/info/${userSkillId}`)
+      .then(({ data }) => {
+        setUserInfo(data);
+
+        // eslint-disable-next-line
+      });
+  }, []);
+
 
   return (
     <>
       <View style={styles.container}>
         <Header />
-
-        <Text style={styles.title}>Esses são os seus projetos</Text>
-        <View style={styles.projectsSection}>
+        {userInfo?.map((user) => (
+            <View style={styles.titleWrap}>
+          <Text key={user.id} style={styles.title}>
+            Essas são as habilidades do(a) usuário(a)  
+          </Text>
+          <Text style={styles.span}>{user.name}</Text>
+          </View>
+        ))}
+        <View style={styles.skillsSection}>
           <View style={styles.wrap}>
             <FlatList
-              data={projectData}
-              renderItem={({ item }) => <UserProjectsCards {...item} />}
+              numColumns={2}
+              data={userSkills}
+              renderItem={({ item }) => <UserSkills {...item} />}
               keyExtractor={(item) => item.id}
             />
           </View>
 
-          <View style={styles.btnWrap}>
-            <TouchableOpacity
-              activeOpacity={0.75}
-              style={styles.btn1}
-              onPress={() => navigation.push("AddProjects")}
-            >
-              <Text style={styles.btnText1}>Adicionar</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              activeOpacity={0.75}
-              style={styles.btn2}
-              onPress={() => navigation.push("EditProjects")}
-            >
-              <Text style={styles.btnText2}>Editar</Text>
-            </TouchableOpacity>
-          </View>
         </View>
       </View>
     </>
@@ -81,38 +76,38 @@ export default function AllSkills() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: bgCinza,
+    backgroundColor: txCinza
   },
 
-  projectsSection: {
-    height: 500,
+  skillsSection: {
+    height: 520,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: bgCinza,
+    backgroundColor: txCinza
 
+  },
+
+  titleWrap: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10
   },
 
   title: {
-    justifyContent: "center",
-    alignItems: "center",
     fontSize: 25,
     fontFamily: "BoldFont",
     textAlign: "center",
-    padding: 20,
-    marginBottom: 40,
-    color: txCinzaEscuro,
+    color: txCinzaEscuro
+  },
+
+  span: {
+    fontSize: 28,
+    fontFamily: "BoldFont",
+    textAlign: "center",
+    color: btnAzul
   },
 
   wrap: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  projectCard: {
-    width: 200,
-    height: 100,
-    backgroundColor: txBranco,
-    borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -122,8 +117,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingTop: 20,
-    backgroundColor: bgCinza,
-
   },
 
   btn1: {

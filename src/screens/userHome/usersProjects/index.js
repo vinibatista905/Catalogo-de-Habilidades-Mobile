@@ -4,7 +4,6 @@ import {
   Text,
   View,
   StyleSheet,
-  TouchableOpacity,
   FlatList,
 } from "react-native";
 import {
@@ -18,21 +17,30 @@ import {
 import Header from "../../../components/header";
 import { useNavigation } from "@react-navigation/core";
 import UserProjectsCards from "../../../components/userProjectsCards";
-import { useAuth } from "../../../contexts/auth";
 
-
-export default function AllSkills() {
+export default function UsersProjects({ route }) {
   const navigation = useNavigation();
 
-  const { user_id } = useAuth();
+  const { userProjectId } = route.params;
 
   const [userProjects, setUserProjects] = useState([]);
+  const [userInfo, setUserInfo] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`http://192.168.2.125:5000/user/check_project/${user_id}`)
+      .get(`http://192.168.2.125:5000/user/check_project/${userProjectId}`)
       .then(({ data }) => {
         setUserProjects(data);
+
+        // eslint-disable-next-line
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(`http://192.168.2.125:5000/user/info/${userProjectId}`)
+      .then(({ data }) => {
+        setUserInfo(data);
 
         // eslint-disable-next-line
       });
@@ -44,8 +52,12 @@ export default function AllSkills() {
     <>
       <View style={styles.container}>
         <Header />
+        {userInfo?.map((user) => (
+          <Text key={user.id} style={styles.title}>
+            Esses são os projetos do(a) usuário(a) {user.name}
+          </Text>
+        ))}
 
-        <Text style={styles.title}>Esses são os seus projetos</Text>
         <View style={styles.projectsSection}>
           <View style={styles.wrap}>
             <FlatList
@@ -53,24 +65,6 @@ export default function AllSkills() {
               renderItem={({ item }) => <UserProjectsCards {...item} />}
               keyExtractor={(item) => item.id}
             />
-          </View>
-
-          <View style={styles.btnWrap}>
-            <TouchableOpacity
-              activeOpacity={0.75}
-              style={styles.btn1}
-              onPress={() => navigation.push("AddProjects")}
-            >
-              <Text style={styles.btnText1}>Adicionar</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              activeOpacity={0.75}
-              style={styles.btn2}
-              onPress={() => navigation.push("EditProjects")}
-            >
-              <Text style={styles.btnText2}>Editar</Text>
-            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -85,11 +79,10 @@ const styles = StyleSheet.create({
   },
 
   projectsSection: {
-    height: 500,
+    height: 530,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: bgCinza,
-
   },
 
   title: {
@@ -99,7 +92,7 @@ const styles = StyleSheet.create({
     fontFamily: "BoldFont",
     textAlign: "center",
     padding: 20,
-    marginBottom: 40,
+    marginBottom: 10,
     color: txCinzaEscuro,
   },
 
@@ -123,7 +116,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 20,
     backgroundColor: bgCinza,
-
   },
 
   btn1: {

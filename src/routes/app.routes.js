@@ -11,6 +11,8 @@ import EditProjects from "../screens/userHome/editProjects";
 import Profile from "../screens/userHome/profile";
 import EditProfile from "../screens/userHome/editProfile";
 import UsersProfile from "../screens/userHome/usersProfile";
+import UsersProjects from "../screens/userHome/usersProjects";
+import UsersSkills from "../screens/userHome/usersSkills";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -33,6 +35,8 @@ const AppRoutes = () => {
             <AppStack.Screen name="Profile" component={Profile} options={{headerShown: false}} />
             <AppStack.Screen name="EditProfile" component={EditProfile} options={{headerShown: false}} />
             <AppStack.Screen name="UsersProfile" component={UsersProfile} options={{headerShown: false}} />
+            <AppStack.Screen name="UsersSkills" component={UsersSkills} options={{headerShown: false}} />
+            <AppStack.Screen name="UsersProjects" component={UsersProjects} options={{headerShown: false}} />
         </AppStack.Navigator>
     )  
 }
