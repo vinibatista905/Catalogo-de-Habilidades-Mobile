@@ -19,6 +19,7 @@ import {
   btnAmarelo,
   btnAzul,
   txBranco,
+  txCinza,
   txCinzaEscuro,
 } from "../../../components/UI/variaveis";
 
@@ -210,6 +211,7 @@ const styles = StyleSheet.create({
     height: 950,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: txCinza
   },
 
   formTitle: {
@@ -247,7 +249,10 @@ const styles = StyleSheet.create({
     fontFamily: "RegularFont",
     backgroundColor: bgCinza,
     borderRadius: 15,
+    borderColor: btnAmarelo,
+    borderWidth: 2,
     padding: 10,
+    backgroundColor: txBranco
   },
 
   loginBtn: {

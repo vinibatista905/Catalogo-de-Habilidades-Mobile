@@ -45,6 +45,13 @@ export default function ForgotPassword() {
               [{ text: "OK", onPress: () => navigation.push("ResetPassword") }]
             );
           }
+        })
+        .catch((err) => {
+          Alert.alert(
+            "E-mail não cadastrado!",
+            "O e-mail fornecido não está registrado. Utilize um e-mail válido.",
+            [{ text: "OK", onPress: () => console.log("Ok") }]
+          );
         });
     };
 

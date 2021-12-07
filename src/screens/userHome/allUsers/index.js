@@ -9,25 +9,54 @@ import {
 import { btnAmarelo, btnAzul, txBranco, txCinzaEscuro, txPreto } from "../../../components/UI/variaveis";
 import Header from "../../../components/header";
 import { useNavigation } from "@react-navigation/core";
-import AllUsers from "../../../components/allUsers";
+import UsersList from "../../../components/allUsers";
 
 
-export default function AllSkills() {
+export default function AllUsers() {
 
   const navigation = useNavigation();
 
-  const [allUsers, setAllUsers] = useState([]);
+  const [allUsersList, setAllUsersList] = useState([]);
 
   useEffect(() => {
     axios
       .get("http://192.168.2.125:5000/user/all_users")
       .then(({ data }) => {
-        setAllUsers(data);
-        console.log(data);
+        setAllUsersList(data);
 
         // eslint-disable-next-line
       });
   }, []);
+
+  const [allProfile, setAllProfile] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://192.168.2.125:5000/user/all_profile")
+      .then(({ data }) => {
+        setAllProfile(data);
+       
+        // eslint-disable-next-line
+      });
+  }, []);
+
+ 
+
+  // const listOfUsers = allUsersList.map((user, index) => ({
+  //   name: user.name,
+  //   email: user.email,
+  //   id: index
+  // }));
+
+  // const listOfProfile = allProfile.map((user) => ({
+  //   profile: user.profileImage
+    
+  // }));
+
+  // const data = listOfUsers.concat(listOfProfile);
+
+  // console.log(data);
+
 
   return (
     <>
@@ -38,9 +67,8 @@ export default function AllSkills() {
         <View style={styles.section}>
           <View style={styles.wrap}>
             <FlatList
-              numColumns={2}
-              data={allUsers}
-              renderItem={({ item }) => <AllUsers {...item} />}
+              data={allUsersList}
+              renderItem={({ item }) => <UsersList {...item}  />}
               keyExtractor={(item) => item.id}
             />
           </View>
@@ -69,7 +97,7 @@ const styles = StyleSheet.create({
     fontFamily: "BoldFont",
     textAlign: "center",
     padding: 20,
-    marginBottom: 20,
+    marginBottom: 10,
     color: txCinzaEscuro
   },
 

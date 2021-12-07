@@ -172,7 +172,8 @@ const styles = StyleSheet.create({
   formDesc: {
     fontSize: 20,
     fontFamily: "BoldFont",
-    marginBottom: 10
+    marginBottom: 10,
+    color: txCinzaEscuro
   },
 
   input: {
@@ -182,6 +183,8 @@ const styles = StyleSheet.create({
     fontFamily: "RegularFont",
     backgroundColor: txBranco,
     borderRadius: 15,
+    borderWidth: 2,
+    borderColor: btnAmarelo,
     padding: 10,
   },
 

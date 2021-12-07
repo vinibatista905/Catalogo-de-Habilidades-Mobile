@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useAuth } from '../../contexts/auth';
+import { useAuth } from "../../contexts/auth";
 
 import {
   Text,
@@ -9,6 +9,7 @@ import {
   Image,
   SafeAreaView,
   TouchableOpacity,
+  View,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { bgAzul, txBranco } from "../UI/variaveis";
@@ -16,7 +17,7 @@ import { bgAzul, txBranco } from "../UI/variaveis";
 export default function Navbar() {
   const navigation = useNavigation();
 
-  const {user_id} = useAuth();
+  const { user_id } = useAuth();
   const [userProfile, setUserProfile] = useState([]);
 
   useEffect(() => {
@@ -32,14 +33,10 @@ export default function Navbar() {
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <TouchableOpacity
-          style={styles.logoWrap}
-          activeOpacity={0.75}
-          onPress={() => navigation.push("Home")}
-        >
+        <View style={styles.logoWrap}>
           <Text style={styles.logo}>Skills Cat</Text>
           <Icon name="logo-octocat" size={30} color="#ffffff" />
-        </TouchableOpacity>
+        </View>
 
         {userProfile?.map((profile) => (
           <TouchableOpacity
