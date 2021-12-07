@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import axios from "axios";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/core";
+import Loader from "../../components/loader";
 import {
   Image,
   Text,
@@ -37,6 +38,8 @@ const validations = yup.object().shape({
 function Register() {
   const navigation = useNavigation();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const register = async (values) => {
     console.log(values);
     await axios
@@ -45,6 +48,7 @@ function Register() {
         const data = resp.data;
         if (data) {
           console.log(data);
+          setIsLoading(true);
           Alert.alert(
             "Registrado com sucesso!",
             "Faça login para acessar sua conta",
@@ -167,6 +171,7 @@ function Register() {
           </View>
         </View>
       </ScrollView>
+      {isLoading === true ? <Loader /> : null}
     </>
   );
 }

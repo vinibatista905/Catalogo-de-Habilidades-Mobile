@@ -8,12 +8,15 @@ const AuthContext = createContext({
   token: "",
   user_id: "",
   login: (values) => {},
+  loading: false
 });
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(false);
   const [token, setToken] = useState("");
   const [userID, setUserID] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const login = async (values) => {
     console.log(values);
@@ -28,6 +31,7 @@ export const AuthProvider = ({ children }) => {
           console.log(stringID);
           setUserID(stringID);
           setAuth(true);
+          setIsLoading(true);
           await AsyncStorage.setItem("auth_token", data.auth_token);
           await AsyncStorage.setItem("user_id", stringID);
         }
@@ -50,7 +54,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ logged: auth, setLogged: setAuth, auth_token: token, user_id: userID, login }}
+      value={{ logged: auth, setLogged: setAuth, auth_token: token, user_id: userID, login, loading: isLoading }}
     >
       {children}
     </AuthContext.Provider>

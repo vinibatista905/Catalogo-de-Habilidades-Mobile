@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../contexts/auth";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/core";
+import Loader from "../../components/loader";
 import {
   Image,
   Text,
@@ -29,7 +30,8 @@ const validations = yup.object().shape({
 
 function Login() {
   const navigation = useNavigation();
-  const {login} = useAuth();
+  const {login, loading} = useAuth();
+  
 
   return (
     <>
@@ -112,6 +114,7 @@ function Login() {
           </View>
         </View>
       </ScrollView>
+     {loading === true ? <Loader /> : null} 
     </>
   );
 }

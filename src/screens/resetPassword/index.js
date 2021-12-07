@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import axios from "axios";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/core";
+import Loader from "../../components/loader";
+
 import {
   Image,
   Text,
@@ -36,6 +38,8 @@ const validations = yup.object().shape({
 
 function ResetPassword() {
   const navigation = useNavigation();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const resetPasswordSubmit = async (values) => {
     console.log(values);
@@ -146,6 +150,7 @@ function ResetPassword() {
           </View>
         </View>
       </ScrollView>
+      {isLoading === true ? <Loader /> : null}
     </>
   );
 }
