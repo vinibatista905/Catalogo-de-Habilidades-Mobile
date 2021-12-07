@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { Alert } from "react-native";
 
 const AuthContext = createContext({
   logged: false,
@@ -16,6 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState("");
   const [userID, setUserID] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [notValidData, setNotValidData] = useState(false);
 
 
   const login = async (values) => {
@@ -35,7 +37,14 @@ export const AuthProvider = ({ children }) => {
           await AsyncStorage.setItem("auth_token", data.auth_token);
           await AsyncStorage.setItem("user_id", stringID);
         }
-      });
+      })
+        .catch((err) => {
+          Alert.alert(
+            "Dados incorretos!",
+            "E-mail e senha devem ser válidos.",
+            [{ text: "OK", onPress: () => console.log("Ok") }]
+          );
+        });
   };
 
   useEffect(() => {

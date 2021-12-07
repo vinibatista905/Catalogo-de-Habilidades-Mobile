@@ -55,6 +55,13 @@ function Register() {
             [{ text: "OK", onPress: () => navigation.push("Login") }]
           );
         }
+      })
+      .catch((err) => {
+        Alert.alert(
+          "Usuário já cadastrado!",
+          "Utilize outros dados para registro.",
+          [{ text: "OK", onPress: () => console.log("Ok") }]
+        );
       });
   };
 

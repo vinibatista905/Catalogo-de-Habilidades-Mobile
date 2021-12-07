@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useAuth } from "../../contexts/auth";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Formik } from "formik";
