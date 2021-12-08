@@ -5,58 +5,67 @@ import {
   View,
   StyleSheet,
   FlatList,
+  TextInput,
+  TouchableOpacity,
 } from "react-native";
-import { btnAmarelo, btnAzul, txBranco, txCinzaEscuro, txPreto } from "../../../components/UI/variaveis";
+import OrderIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import {
+  btnAmarelo,
+  btnAzul,
+  txBranco,
+  txCinzaEscuro,
+  txPreto,
+} from "../../../components/UI/variaveis";
 import Header from "../../../components/header";
 import { useNavigation } from "@react-navigation/core";
 import UsersList from "../../../components/allUsers";
 
-
 export default function AllUsers() {
-
   const navigation = useNavigation();
 
-  const [allUsersList, setAllUsersList] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://192.168.2.125:5000/user/all_users")
-      .then(({ data }) => {
-        setAllUsersList(data);
+    axios.get("http://192.168.2.125:5000/user/all_users").then(({ data }) => {
+      setAllUsers(data);
 
-        // eslint-disable-next-line
-      });
+      // eslint-disable-next-line
+    });
   }, []);
 
-  const [allProfile, setAllProfile] = useState([]);
+  // const [allProfile, setAllProfile] = useState([]);
+
+  // useEffect(() => {
+  //   axios.get("http://192.168.2.125:5000/user/all_profile").then(({ data }) => {
+  //     setAllProfile(data);
+
+  //     // eslint-disable-next-line
+  //   });
+  // }, []);
+
+  const [searchText, setSearchText] = useState("");
+  const [list, setList] = useState(allUsers);
+
+  const handleOrderClick = () => {
+    let newList = [...list];
+
+    newList.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
+
+    setList(newList);
+  };
 
   useEffect(() => {
-    axios
-      .get("http://192.168.2.125:5000/user/all_profile")
-      .then(({ data }) => {
-        setAllProfile(data);
-       
-        // eslint-disable-next-line
-      });
-  }, []);
-
- 
-
-  // const listOfUsers = allUsersList.map((user, index) => ({
-  //   name: user.name,
-  //   email: user.email,
-  //   id: index
-  // }));
-
-  // const listOfProfile = allProfile.map((user) => ({
-  //   profile: user.profileImage
-    
-  // }));
-
-  // const data = listOfUsers.concat(listOfProfile);
-
-  // console.log(data);
-
+    if (searchText === "") {
+      setList(allUsers);
+    } else {
+      setList(
+        allUsers.filter(
+          (item) =>
+            item.name.toLowerCase().indexOf(searchText.toLowerCase()) > -1
+        )
+      );
+    }
+  }, [searchText]);
 
   return (
     <>
@@ -65,14 +74,28 @@ export default function AllUsers() {
 
         <Text style={styles.title}>Esses são todos os usuários</Text>
         <View style={styles.section}>
+          <View style={styles.searchWrap}>
+            <TextInput
+              style={styles.search}
+              placeholder="Pesquise um usuário"
+              value={searchText}
+              onChangeText={(t) => setSearchText(t)}
+            />
+            <TouchableOpacity activeOpacity={0.4} onPress={handleOrderClick}>
+              <OrderIcon
+                name="order-alphabetical-ascending"
+                size={40}
+                color={btnAzul}
+              />
+            </TouchableOpacity>
+          </View>
           <View style={styles.wrap}>
             <FlatList
-              data={allUsersList}
-              renderItem={({ item }) => <UsersList {...item}  />}
+              data={list}
+              renderItem={({ item }) => <UsersList {...item} />}
               keyExtractor={(item) => item.id}
             />
           </View>
-
         </View>
       </View>
     </>
@@ -97,8 +120,27 @@ const styles = StyleSheet.create({
     fontFamily: "BoldFont",
     textAlign: "center",
     padding: 20,
-    marginBottom: 10,
-    color: txCinzaEscuro
+    marginBottom: 30,
+    color: txCinzaEscuro,
+  },
+
+  searchWrap: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+
+  search: {
+    width: 300,
+    height: 60,
+    paddingLeft: 10,
+    fontSize: 20,
+    backgroundColor: txBranco,
+    borderRadius: 12,
+    borderColor: btnAzul,
+    borderWidth: 2,
+    marginVertical: 20,
+    marginRight: 10,
   },
 
   wrap: {

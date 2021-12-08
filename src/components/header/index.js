@@ -38,7 +38,7 @@ export default function Header() {
           onPress={() => navigation.push("Home")}
         >
           <Icon name="md-arrow-back-circle" size={32} color="#ffffff" />
-          <Text style={styles.logo}>Voltar</Text>
+          <Text style={styles.logo}>Home</Text>
         </TouchableOpacity>
 
         {userProfile?.map((profile) => (

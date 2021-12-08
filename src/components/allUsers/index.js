@@ -40,7 +40,7 @@ export default function UsersList({ id, name, email, profile }) {
 const styles = StyleSheet.create({
   card: {
     width: 350,
-    height: 140,
+    height: 120,
     backgroundColor: txBranco,
     justifyContent: "center",
     alignContent: "flex-start",
