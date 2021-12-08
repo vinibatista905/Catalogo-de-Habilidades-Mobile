@@ -1,9 +1,9 @@
 import React from "react";
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Formik } from "formik";
 import { useNavigation } from "@react-navigation/core";
 import Header from "../../../components/header";
+import { useAuth } from "../../../contexts/auth";
 
 import {
   Image,
@@ -13,29 +13,36 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import {
   bgAzul,
-  bgCinza,
   btnAmarelo,
   btnAzul,
   txBranco,
+  txCinza,
   txCinzaEscuro,
   txPreto,
 } from "../../../components/UI/variaveis";
 
 export default function AddProjects() {
   const navigation = useNavigation();
+  const { user_id } = useAuth();
 
-  const login = async (values) => {
-    console.log(values);
+  const addNewProject = async (values) => {
+    const data = {
+      name: values.name,
+      id: user_id,
+    };
+    console.log(data);
     await axios
-      .post("http://192.168.2.125:5000/user/add_project", values)
+      .post("http://192.168.2.125:5000/user/add_project", data)
       .then((resp) => {
         const data = resp.data;
         if (data) {
-          console.log(data);
-          // navigation.push("Login");
+          Alert.alert("Projeto adicionado!", "", [
+            { text: "OK", onPress: () => console.log("OK") },
+          ]);
         }
       });
   };
@@ -57,16 +64,19 @@ export default function AddProjects() {
               Adicione projetos que você já participou
             </Text>
 
-            <Formik initialValues={{}} onSubmit={(values) => login(values)}>
+            <Formik
+              initialValues={{}}
+              onSubmit={(values) => addNewProject(values)}
+            >
               {({ handleChange, handleBlur, handleSubmit, values }) => (
                 <View style={styles.form}>
                   <View style={styles.descWrap}>
                     <Text style={styles.formDesc}>Projeto</Text>
                     <TextInput
                       style={styles.input}
-                      onChangeText={handleChange("project")}
-                      onBlur={handleBlur("project")}
-                      value={values.project}
+                      onChangeText={handleChange("name")}
+                      onBlur={handleBlur("name")}
+                      value={values.name}
                       placeholder="Projeto"
                       keyboardType="default"
                     />
@@ -120,6 +130,7 @@ const styles = StyleSheet.create({
     height: 400,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: txCinza,
   },
 
   formTitle: {
@@ -129,7 +140,7 @@ const styles = StyleSheet.create({
     fontFamily: "BoldFont",
     textAlign: "center",
     marginBottom: 10,
-    color: txCinzaEscuro
+    color: txCinzaEscuro,
   },
 
   form: {
@@ -147,8 +158,8 @@ const styles = StyleSheet.create({
   formDesc: {
     fontSize: 20,
     fontFamily: "BoldFont",
-    marginBottom: 10
-
+    marginBottom: 10,
+    color: txCinzaEscuro,
   },
 
   input: {
@@ -156,7 +167,9 @@ const styles = StyleSheet.create({
     height: 60,
     fontSize: 20,
     fontFamily: "RegularFont",
-    backgroundColor: bgCinza,
+    backgroundColor: txBranco,
+    borderColor: btnAmarelo,
+    borderWidth: 2,
     borderRadius: 15,
     padding: 10,
   },

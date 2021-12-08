@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../contexts/auth";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Formik } from "formik";
@@ -23,15 +23,19 @@ import {
 } from "../../components/UI/variaveis";
 
 const validations = yup.object().shape({
-  email: yup.string().email("Por favor insira um e-mail válido").required("E-mail é obrigatório"),
-  password: yup.string().min(6, ({ min }) => `Senha deve conter ao menos ${min} caracteres`).required("Senha é obrigatório"),
+  email: yup
+    .string()
+    .email("Por favor insira um e-mail válido")
+    .required("E-mail é obrigatório"),
+  password: yup
+    .string()
+    .min(6, ({ min }) => `Senha deve conter ao menos ${min} caracteres`)
+    .required("Senha é obrigatório"),
 });
-
 
 function Login() {
   const navigation = useNavigation();
-  const {login, loading} = useAuth();
-  
+  const { login, loading } = useAuth();
 
   return (
     <>
@@ -54,8 +58,19 @@ function Login() {
           <View style={styles.formSection}>
             <Text style={styles.formTitle}>Login</Text>
 
-            <Formik validationSchema={validations} initialValues={{}} onSubmit={(values) => login(values)}>
-              {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
+            <Formik
+              validationSchema={validations}
+              initialValues={{}}
+              onSubmit={(values) => login(values)}
+            >
+              {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                values,
+                errors,
+                isValid,
+              }) => (
                 <View style={styles.form}>
                   <View style={styles.descWrap}>
                     <Text style={styles.formDesc}>E-mail*</Text>
@@ -68,9 +83,11 @@ function Login() {
                       placeholder="E-mail"
                       keyboardType="email-address"
                     />
-                    {errors.email &&
-                    <Text style={{ fontSize: 15, color: 'red' }}>{errors.email}</Text>
-                    }
+                    {errors.email && (
+                      <Text style={{ fontSize: 15, color: "red" }}>
+                        {errors.email}
+                      </Text>
+                    )}
                   </View>
                   <View style={styles.descWrap}>
                     <Text style={styles.formDesc}>Senha*</Text>
@@ -84,18 +101,26 @@ function Login() {
                       placeholder="Senha"
                       keyboardType="default"
                     />
-                    {errors.password &&
-                    <Text style={{ fontSize: 15, color: 'red' }}>{errors.password}</Text>
-                    }
+                    {errors.password && (
+                      <Text style={{ fontSize: 15, color: "red" }}>
+                        {errors.password}
+                      </Text>
+                    )}
                   </View>
-                  <Text style={styles.passwordLink} onPress={() => navigation.push("ForgotPassword")}>Esqueceu a senha?</Text>
+                  <Text
+                    style={styles.passwordLink}
+                    onPress={() => navigation.push("ForgotPassword")}
+                  >
+                    Esqueceu a senha?
+                  </Text>
                   <TouchableOpacity
-                  activeOpacity={0.75}
+                    activeOpacity={0.75}
                     style={styles.loginBtn}
                     disabled={!isValid}
-                    onPress={handleSubmit}>
-                      <Text style={styles.btnText}>Login</Text>
-                      </TouchableOpacity>
+                    onPress={handleSubmit}
+                  >
+                    <Text style={styles.btnText}>Login</Text>
+                  </TouchableOpacity>
                 </View>
               )}
             </Formik>
@@ -114,7 +139,7 @@ function Login() {
           </View>
         </View>
       </ScrollView>
-     {loading === true ? <Loader /> : null} 
+      {loading === true ? <Loader /> : null}
     </>
   );
 }
@@ -135,7 +160,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    marginTop: 15
+    marginTop: 15,
   },
 
   title: {
@@ -169,7 +194,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     fontSize: 40,
     fontFamily: "ExtraBold",
-    marginTop: 10
+    marginTop: 10,
   },
 
   form: {
@@ -187,7 +212,7 @@ const styles = StyleSheet.create({
   formDesc: {
     fontSize: 20,
     fontFamily: "BoldFont",
-    marginBottom: 10
+    marginBottom: 10,
   },
 
   input: {
@@ -198,6 +223,13 @@ const styles = StyleSheet.create({
     backgroundColor: bgCinza,
     borderRadius: 15,
     padding: 10,
+  },
+
+  checkbox: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    marginVertical: 10,
   },
 
   passwordLink: {
@@ -211,19 +243,18 @@ const styles = StyleSheet.create({
   loginBtn: {
     justifyContent: "center",
     alignContent: "center",
-   
+
     width: 100,
     height: 45,
     backgroundColor: btnAzul,
     borderRadius: 15,
-    
   },
 
   btnText: {
     fontSize: 18,
     fontFamily: "BoldFont",
     color: txBranco,
-    textAlign: "center"
+    textAlign: "center",
   },
 
   registerWrap: {

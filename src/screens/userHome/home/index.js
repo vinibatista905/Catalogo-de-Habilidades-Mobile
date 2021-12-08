@@ -45,7 +45,7 @@ function Home() {
               />
               <Text style={styles.welcomeText}>Seja Bem Vindo(a)</Text>
               {userInfo?.map((user) => (
-                <Text style={styles.welcomeText}>{user.name}</Text>
+                <Text key={user.id} style={styles.welcomeText}>{user.name}</Text>
               ))}
               <Text style={styles.welcomeInfo}>
                 O que você quer fazer hoje?
@@ -55,11 +55,13 @@ function Home() {
           </View>
 
           <View style={styles.wrap}>
+          
             <FlatList
               numColumns={2}
               data={HomeData}
               renderItem={({ item }) => <HomeItem {...item} />}
               keyExtractor={(item) => item.id}
+              nestedScrollEnabled
             />
           </View>
         </SafeAreaView>

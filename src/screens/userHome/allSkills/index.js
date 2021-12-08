@@ -51,9 +51,9 @@ export default function AllSkills() {
   };
 
   useEffect(() => {
-    if (searchText === "") {
+    if (!searchText && userSkills.length ) {
       setList(userSkills);
-    } else {
+    } else if (userSkills.length) {
       setList(
         userSkills.filter(
           (item) =>
@@ -61,7 +61,7 @@ export default function AllSkills() {
         )
       );
     }
-  }, [searchText]);
+  }, [searchText, userSkills]);
 
   return (
     <>
@@ -120,7 +120,7 @@ export default function AllSkills() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: 900,
     backgroundColor: txCinza,
   },
 

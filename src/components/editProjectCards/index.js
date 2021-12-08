@@ -1,15 +1,24 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native'
 import { btnAmarelo, btnAzul, txBranco, txCinzaEscuro } from '../UI/variaveis';
+import { useAuth } from "../../contexts/auth";
+import axios from 'axios';
 
-export default function EditProjectsCards({name, manager, startDate, conclusionDate, skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8}) {
+export default function EditProjectsCards({ id, name, manager, startDate, conclusionDate, skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8}) {
+  
+  const { user_id } = useAuth();
+  
 
-  const removeProject = () => {
+  function removeProject() {
+
+    console.log()
+
     Alert.alert(
       "Remover Projeto",
       "Deseja remover esse projeto?",
       [
-        { text: "OK", onPress: () => console.log("OK Pressed") },
+        { text: "OK", onPress: () => {console.log()}      
+      },
         {
           text: "Cancelar",
           onPress: () => console.log("Cancel Pressed"),
@@ -21,13 +30,15 @@ export default function EditProjectsCards({name, manager, startDate, conclusionD
   
 
     return (
-        <TouchableOpacity onPress={removeProject} activeOpacity={0.5} style={styles.projectCard}>
+        <TouchableOpacity onPress={removeProject()} 
+        activeOpacity={0.5} style={styles.projectCard}>
             <View style={styles.wrap}>
             <Image source={require("../../assets/project-3.png")} style={styles.image} />
             <Text style={styles.projectName}>{name}</Text>
             <Text style={styles.info}>Gestor: {manager}</Text>
             <Text style={styles.info}>Data de Início: {startDate}</Text>
             <Text style={styles.info}> Data de Conclusão: {conclusionDate}</Text>
+            <Text style={styles.info}> ID: {id}</Text>
             <Text style={styles.info}>Skills:</Text>
             <View style={styles.skillsWrap}>
             {skill1 === null ? null : <View style={styles.skillTag}><Text style={styles.skill}>{skill1}</Text></View>}

@@ -53,9 +53,11 @@ export default function UsersProjects({ route }) {
       <View style={styles.container}>
         <Header />
         {userInfo?.map((user) => (
+           <View style={styles.titleWrap}>
           <Text key={user.id} style={styles.title}>
-            Esses são os projetos do(a) usuário(a) {user.name}
-          </Text>
+            Esses são os projetos do(a) usuário(a)</Text>
+          <Text style={styles.span}>{user.name}</Text>
+          </View>
         ))}
 
         <View style={styles.projectsSection}>
@@ -85,15 +87,24 @@ const styles = StyleSheet.create({
     backgroundColor: bgCinza,
   },
 
-  title: {
+  titleWrap: {
     justifyContent: "center",
     alignItems: "center",
+    padding: 10
+  },
+
+  title: {
     fontSize: 25,
     fontFamily: "BoldFont",
     textAlign: "center",
-    padding: 20,
-    marginBottom: 10,
-    color: txCinzaEscuro,
+    color: txCinzaEscuro
+  },
+
+  span: {
+    fontSize: 28,
+    fontFamily: "BoldFont",
+    textAlign: "center",
+    color: btnAzul
   },
 
   wrap: {

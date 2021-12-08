@@ -13,6 +13,7 @@ import {
   btnAmarelo,
   btnAzul,
   txBranco,
+  txCinza,
   txCinzaEscuro,
   txPreto,
 } from "../../../components/UI/variaveis";
@@ -33,18 +34,18 @@ export default function AllUsers() {
     });
   }, []);
 
-  // const [allProfile, setAllProfile] = useState([]);
+  const [allProfile, setAllProfile] = useState([]);
 
-  // useEffect(() => {
-  //   axios.get("http://192.168.2.125:5000/user/all_profile").then(({ data }) => {
-  //     setAllProfile(data);
+  useEffect(() => {
+    axios.get("http://192.168.2.125:5000/user/all_profile").then(({ data }) => {
+      setAllProfile(data);
 
-  //     // eslint-disable-next-line
-  //   });
-  // }, []);
+      // eslint-disable-next-line
+    });
+  }, []);
 
   const [searchText, setSearchText] = useState("");
-  const [list, setList] = useState(allUsers);
+  const [list, setList] = useState([]);
 
   const handleOrderClick = () => {
     let newList = [...list];
@@ -55,9 +56,9 @@ export default function AllUsers() {
   };
 
   useEffect(() => {
-    if (searchText === "") {
+    if (!searchText && allUsers.length ) {
       setList(allUsers);
-    } else {
+    } else if (allUsers.length) {
       setList(
         allUsers.filter(
           (item) =>
@@ -65,7 +66,8 @@ export default function AllUsers() {
         )
       );
     }
-  }, [searchText]);
+  }, [searchText, allUsers]);
+
 
   return (
     <>
@@ -92,7 +94,7 @@ export default function AllUsers() {
           <View style={styles.wrap}>
             <FlatList
               data={list}
-              renderItem={({ item }) => <UsersList {...item} />}
+              renderItem={({ item }) => <UsersList {...item} profile={allProfile.find((p) => p.idUser === item.id)} />}
               keyExtractor={(item) => item.id}
             />
           </View>
@@ -104,7 +106,8 @@ export default function AllUsers() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    backgroundColor: txCinza,
+    height: 900
   },
 
   section: {
