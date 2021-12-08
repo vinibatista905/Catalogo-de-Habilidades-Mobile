@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, StyleSheet, View } from "react-native";
-import { btnAmarelo, txBranco, txCinzaEscuro } from "../UI/variaveis";
+import { btnAmarelo, btnVerde, txBranco, txCinzaEscuro, txVermelho } from "../UI/variaveis";
 
 export default function UserSkills({ type, name, level }) {
   
@@ -9,9 +9,9 @@ export default function UserSkills({ type, name, level }) {
     <>
       <View style={styles.card}>
         <View style={styles.wrap}>
-          <Text style={styles.type}>{type}</Text>
           <Text style={styles.type}>{name}</Text>
           <Text style={styles.type}>{level}</Text>
+          <Text style={styles.type}>{type}</Text>
         </View>
       </View>
     </>
@@ -20,8 +20,8 @@ export default function UserSkills({ type, name, level }) {
 
 const styles = StyleSheet.create({
   card: {
-    width: 160,
-    height: 140,
+    width: 360,
+    height: 100,
     backgroundColor: txBranco,
     justifyContent: "center",
     alignContent: "center",
@@ -41,6 +41,20 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     color: txCinzaEscuro,
+  },
+
+  front: {
+    fontFamily: "BoldFont",
+    fontSize: 18,
+    textAlign: "center",
+    color: btnVerde,
+  },
+
+  front: {
+    fontFamily: "BoldFont",
+    fontSize: 18,
+    textAlign: "center",
+    color: txVermelho,
   },
 
   icon: {

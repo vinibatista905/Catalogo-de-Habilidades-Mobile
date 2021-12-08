@@ -6,16 +6,23 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  TextInput,
 } from "react-native";
-import { btnAmarelo, btnAzul, txBranco, txCinza, txCinzaEscuro, txPreto } from "../../../components/UI/variaveis";
+import {
+  btnAmarelo,
+  btnAzul,
+  txBranco,
+  txCinza,
+  txCinzaEscuro,
+  txPreto,
+} from "../../../components/UI/variaveis";
+import OrderIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import Header from "../../../components/header";
 import UserSkills from "../../../components/userSkills";
 import { useNavigation } from "@react-navigation/core";
 import { useAuth } from "../../../contexts/auth";
 
-
 export default function AllSkills() {
-
   const navigation = useNavigation();
 
   const { user_id } = useAuth();
@@ -27,11 +34,34 @@ export default function AllSkills() {
       .get(`http://192.168.2.125:5000/user/check_skill/${user_id}`)
       .then(({ data }) => {
         setUserSkills(data);
-        console.log(data);
 
         // eslint-disable-next-line
       });
   }, []);
+
+  const [searchText, setSearchText] = useState("");
+  const [list, setList] = useState(userSkills);
+
+  const handleOrderClick = () => {
+    let newList = [...list];
+
+    newList.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
+
+    setList(newList);
+  };
+
+  useEffect(() => {
+    if (searchText === "") {
+      setList(userSkills);
+    } else {
+      setList(
+        userSkills.filter(
+          (item) =>
+            item.name.toLowerCase().indexOf(searchText.toLowerCase()) > -1
+        )
+      );
+    }
+  }, [searchText]);
 
   return (
     <>
@@ -39,11 +69,28 @@ export default function AllSkills() {
         <Header />
 
         <Text style={styles.title}>Essas são as suas habilidades</Text>
+
+        <View style={styles.searchWrap}>
+          <TextInput
+            style={styles.search}
+            placeholder="Pesquise uma habilidade"
+            value={searchText}
+            onChangeText={(t) => setSearchText(t)}
+          />
+          <TouchableOpacity activeOpacity={0.4} onPress={handleOrderClick}>
+            <OrderIcon
+              name="order-alphabetical-ascending"
+              size={40}
+              color={btnAzul}
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.skillsSection}>
           <View style={styles.wrap}>
             <FlatList
-              numColumns={2}
-              data={userSkills}
+              data={list}
               renderItem={({ item }) => <UserSkills {...item} />}
               keyExtractor={(item) => item.id}
             />
@@ -74,15 +121,15 @@ export default function AllSkills() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: txCinza
+    backgroundColor: txCinza,
   },
 
   skillsSection: {
-    height: 520,
+    height: 420,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: txCinza
-
+    backgroundColor: txCinza,
+    marginTop: 30,
   },
 
   title: {
@@ -92,8 +139,30 @@ const styles = StyleSheet.create({
     fontFamily: "BoldFont",
     textAlign: "center",
     padding: 20,
-    marginBottom: 40,
-    color: txCinzaEscuro
+    color: txCinzaEscuro,
+  },
+
+  searchWrap: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+
+  search: {
+    width: 300,
+    height: 60,
+    paddingLeft: 10,
+    fontSize: 20,
+    backgroundColor: txBranco,
+    borderRadius: 12,
+    borderColor: btnAzul,
+    borderWidth: 2,
+    marginBottom: 20,
+    marginRight: 10,
+  },
+
+  icon: {
+    marginBottom: 20,
   },
 
   wrap: {
