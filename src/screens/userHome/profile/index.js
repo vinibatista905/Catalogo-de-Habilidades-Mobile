@@ -18,7 +18,7 @@ import { useAuth } from "../../../contexts/auth";
 export default function AllSkills() {
   const navigation = useNavigation();
 
-  const { user_id } = useAuth();
+  const { user_id, logOut } = useAuth();
 
   const [userInfo, setUserInfo] = useState([]);
 
@@ -97,10 +97,7 @@ export default function AllSkills() {
             <TouchableOpacity
               activeOpacity={0.75}
               style={styles.btn1}
-              onPress={() => {
-                AsyncStorage.clear();
-              
-              }}
+              onPress={logOut}
             >
               <Text style={styles.btnText1}>Sair</Text>
             </TouchableOpacity>

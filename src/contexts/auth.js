@@ -9,6 +9,7 @@ const AuthContext = createContext({
   token: "",
   user_id: "",
   login: (values) => {},
+  logOut: () => {},
   loading: false
 });
 
@@ -47,6 +48,15 @@ export const AuthProvider = ({ children }) => {
         });
   };
 
+  const logOut = async () => {
+
+    await AsyncStorage.clear();
+    setAuth(false);
+    setToken("");
+    setUserID("");
+
+  }
+
   useEffect(() => {
     getIsLogged();
   }, []);
@@ -63,7 +73,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ logged: auth, setLogged: setAuth, auth_token: token, user_id: userID, login, loading: isLoading }}
+      value={{ logged: auth, setLogged: setAuth, auth_token: token, user_id: userID, login, loading: isLoading, logOut }}
     >
       {children}
     </AuthContext.Provider>

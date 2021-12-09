@@ -12,6 +12,7 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  Alert
 } from "react-native";
 import {
   bgAzul,
@@ -42,15 +43,17 @@ function EditProfile() {
   }, []);
 
   //ATUALIZAÇÃO DO PERFIL
-  const login = async (values) => {
+  const updateProfile = async (values) => {
     console.log(values);
     await axios
       .put(`http://192.168.2.125:5000/user/update_profile/${user_id}`, values)
       .then((resp) => {
         const data = resp.data;
         if (data) {
-          console.log(data);
-          // navigation.push("Login");
+          Alert.alert("Perfil atualizado!", "", [
+            { text: "OK", onPress: () => navigation.navigate("Profile") },
+          ]);
+          
         }
       });
   };
@@ -81,7 +84,7 @@ function EditProfile() {
                   linkedin: profile.linkedin,
                   github: profile.github,
                 }}
-                onSubmit={(values) => login(values)}
+                onSubmit={(values) => updateProfile(values)}
               >
                 {({ handleChange, handleBlur, handleSubmit, values }) => (
                   <View style={styles.form}>

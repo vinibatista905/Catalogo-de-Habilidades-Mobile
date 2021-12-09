@@ -11,7 +11,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  Alert
+  Alert,
 } from "react-native";
 import {
   bgAzul,
@@ -24,7 +24,6 @@ import {
   txPreto,
 } from "../../../components/UI/variaveis";
 
-
 export default function AddSkills() {
   const navigation = useNavigation();
   const { user_id } = useAuth();
@@ -33,13 +32,11 @@ export default function AddSkills() {
   const [allSkills, setAllSkills] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://192.168.2.125:5000/user/all_skills")
-      .then(({ data }) => {
-        setAllSkills(data);
+    axios.get("http://192.168.2.125:5000/user/all_skills").then(({ data }) => {
+      setAllSkills(data);
 
-        // eslint-disable-next-line
-      });
+      // eslint-disable-next-line
+    });
   }, []);
 
   // STATE PARA GUARDAR A HABILIDADE SELECIONADA
@@ -53,20 +50,16 @@ export default function AddSkills() {
 
   // LÓGICA PARA FILTRAR AS HABILIDADES
   function skillOptions() {
-    
     return allSkills
       .filter((skill) => skill.category === skillType)
       .map((skill) => {
-        return (<Picker.Item
-          key={skill.id}
-          label={skill.name}
-          value={skill.name}
-        />);
+        return (
+          <Picker.Item key={skill.id} label={skill.name} value={skill.name} />
+        );
       });
   }
 
-
-// SUBMIT DA HABILIDADE
+  // SUBMIT DA HABILIDADE
 
   const addSkill = async () => {
     const data = {
@@ -84,14 +77,15 @@ export default function AddSkills() {
           Alert.alert("Habilidade adicionada!", "", [
             { text: "OK", onPress: () => console.log("OK") },
           ]);
-          
         }
       })
       .catch((err) => {
         console.log(err);
-        Alert.alert("Habilidade já cadastrada!", "Por favor adicione outra habilidade.", [
-          { text: "OK", onPress: () => console.log("OK") },
-        ]);
+        Alert.alert(
+          "Habilidade já cadastrada!",
+          "Por favor adicione outra habilidade.",
+          [{ text: "OK", onPress: () => console.log("OK") }]
+        );
       });
   };
 
@@ -115,60 +109,54 @@ export default function AddSkills() {
             <Picker
               selectedValue={skillType}
               style={styles.selector}
-              onValueChange={(itemValue, itemIndex) =>
-                setSkillType(itemValue)
-              }>
-                  <Picker.Item label="Front-End" value="Front-End" />
-                  <Picker.Item label="Back-End" value="Back-End" />
-                  <Picker.Item label="Banco de Dados" value="Database" />
-                  <Picker.Item label="DevOps" value="DevOps" />
-                
+              onValueChange={(itemValue, itemIndex) => setSkillType(itemValue)}
+            >
+              <Picker.Item label="Front-End" value="Front-End" />
+              <Picker.Item label="Back-End" value="Back-End" />
+              <Picker.Item label="Banco de Dados" value="Database" />
+              <Picker.Item label="DevOps" value="DevOps" />
             </Picker>
-
 
             <Picker
               selectedValue={skillSelected}
               style={styles.selector}
               onValueChange={(itemValue, itemIndex) =>
                 setSkillSelected(itemValue)
-              }>
-                  {skillOptions()}
-                
+              }
+            >
+              {skillOptions()}
             </Picker>
-
 
             <Picker
               selectedValue={selectedLevel}
               style={styles.selector}
               onValueChange={(itemValue, itemIndex) =>
                 setSelectedLevel(itemValue)
-              }>
-                  <Picker.Item label="Básico" value="Básico" />
-                  <Picker.Item label="Intermediário" value="Intermediário" />
-                  <Picker.Item label="Avançado" value="Avançado" />
-                  <Picker.Item label="Especialista" value="Especialista" />
-                
+              }
+            >
+              <Picker.Item label="Básico" value="Básico" />
+              <Picker.Item label="Intermediário" value="Intermediário" />
+              <Picker.Item label="Avançado" value="Avançado" />
+              <Picker.Item label="Especialista" value="Especialista" />
             </Picker>
 
-
             <View style={styles.btnWrap}>
-                    <TouchableOpacity
-                      activeOpacity={0.75}
-                      style={styles.addBtn}
-                      onPress={addSkill}
-                    >
-                      <Text style={styles.btnText1}>Adicionar</Text>
-                    </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.75}
+                style={styles.addBtn}
+                onPress={addSkill}
+              >
+                <Text style={styles.btnText1}>Adicionar</Text>
+              </TouchableOpacity>
 
-                    <TouchableOpacity
-                      activeOpacity={0.75}
-                      style={styles.checkBtn}
-                      onPress={() => navigation.push("AllSkills")}
-                    >
-                      <Text style={styles.btnText2}>Ver Habilidades</Text>
-                    </TouchableOpacity>
-                  </View>
-
+              <TouchableOpacity
+                activeOpacity={0.75}
+                style={styles.checkBtn}
+                onPress={() => navigation.push("AllSkills")}
+              >
+                <Text style={styles.btnText2}>Ver Habilidades</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -226,7 +214,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "BoldFont",
     marginBottom: 10,
-    color: txCinzaEscuro
+    color: txCinzaEscuro,
   },
 
   selector: {
@@ -238,7 +226,7 @@ const styles = StyleSheet.create({
     padding: 20,
     marginTop: 20,
     marginBottom: 20,
-    color: txCinzaEscuro
+    color: txCinzaEscuro,
   },
 
   input: {
