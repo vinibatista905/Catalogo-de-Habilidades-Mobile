@@ -2,12 +2,12 @@ import React from "react";
 import { Text, StyleSheet, View } from "react-native";
 import { btnAmarelo, btnVerde, txBranco, txCinzaEscuro, txVermelho } from "../UI/variaveis";
 
-export default function UserSkills({ type, name, level }) {
+export default function UserSkills({ type, name, level, id }) {
   
 
   return (
     <>
-      <View style={styles.card}>
+      <View key={id} style={styles.card}>
         <View style={styles.wrap}>
           <Text style={styles.type}>{name}</Text>
           <Text style={styles.type}>{level}</Text>

@@ -2,10 +2,10 @@ import React from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native'
 import { btnAmarelo, btnAzul, txBranco, txCinzaEscuro } from '../UI/variaveis';
 
-export default function UserProjectsCards({name, manager, startDate, conclusionDate, skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8}) {
+export default function UserProjectsCards({ id, name, manager, startDate, conclusionDate, skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8}) {
   
     return (
-        <View activeOpacity={0.5} style={styles.projectCard}>
+        <View key={id} activeOpacity={0.5} style={styles.projectCard}>
             <View style={styles.wrap}>
             <Image source={require("../../assets/project-3.png")} style={styles.image} />
             <Text style={styles.projectName}>{name}</Text>
