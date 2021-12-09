@@ -187,6 +187,7 @@ const styles = StyleSheet.create({
     height: 520,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: txBranco
   },
 
   formTitle: {
@@ -223,6 +224,15 @@ const styles = StyleSheet.create({
     backgroundColor: bgCinza,
     borderRadius: 15,
     padding: 10,
+    shadowColor: "#000",
+shadowOffset: {
+	width: 0,
+	height: 2,
+},
+shadowOpacity: 0.25,
+shadowRadius: 3.84,
+
+elevation: 5,
   },
 
   checkbox: {

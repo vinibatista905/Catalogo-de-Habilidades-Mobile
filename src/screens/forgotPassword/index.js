@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import axios from "axios";
 import { Formik } from "formik";
@@ -12,7 +12,7 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
-  Alert
+  Alert,
 } from "react-native";
 import {
   bgAzul,
@@ -23,40 +23,41 @@ import {
 } from "../../components/UI/variaveis";
 
 const validations = yup.object().shape({
-  email: yup.string().email("Por favor insira um e-mail válido").required("E-mail é obrigatório"),
-
+  email: yup
+    .string()
+    .email("Por favor insira um e-mail válido")
+    .required("E-mail é obrigatório"),
 });
 
-
 export default function ForgotPassword() {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
 
-    const sendEmail = async (values) => {
-      console.log(values);
-      await axios
-        .post("http://192.168.2.125:5000/user/forgot_password", values)
-        .then((resp) => {
-          const data = resp.data;
-          if (data) {
-            console.log(data);
-            Alert.alert(
-              "Token enviado com sucesso!",
-              "Verifique seu e-mail para ter acesso ao token",
-              [{ text: "OK", onPress: () => navigation.push("ResetPassword") }]
-            );
-          }
-        })
-        .catch((err) => {
+  const sendEmail = async (values) => {
+    console.log(values);
+    await axios
+      .post("http://192.168.2.125:5000/user/forgot_password", values)
+      .then((resp) => {
+        const data = resp.data;
+        if (data) {
+          console.log(data);
           Alert.alert(
-            "E-mail não cadastrado!",
-            "O e-mail fornecido não está registrado. Utilize um e-mail válido.",
-            [{ text: "OK", onPress: () => console.log("Ok") }]
+            "Token enviado com sucesso!",
+            "Verifique seu e-mail para ter acesso ao token",
+            [{ text: "OK", onPress: () => navigation.push("ResetPassword") }]
           );
-        });
-    };
+        }
+      })
+      .catch((err) => {
+        Alert.alert(
+          "E-mail não cadastrado!",
+          "O e-mail fornecido não está registrado. Utilize um e-mail válido.",
+          [{ text: "OK", onPress: () => console.log("Ok") }]
+        );
+      });
+  };
 
-    return (
-        <>
+  return (
+    <>
       <ScrollView>
         <View style={styles.loginContainer}>
           <View style={styles.imageSection}>
@@ -65,7 +66,8 @@ export default function ForgotPassword() {
               <Icon name="logo-octocat" size={40} color="#ffffff" />
             </View>
             <Text style={styles.desc}>
-              Verifique o seu e-mail para utilizar o token de alteração de senha.
+              Verifique o seu e-mail para utilizar o token de alteração de
+              senha.
             </Text>
             <Image
               style={styles.loginImage}
@@ -75,10 +77,16 @@ export default function ForgotPassword() {
 
           <View style={styles.formSection}>
             <Text style={styles.formTitle}>Alterar Senha</Text>
-            <Text style={styles.formMessage}>Insira seu e-mail e enviaremos um token para alterar a senha.</Text>
+            <Text style={styles.formMessage}>
+              Insira seu e-mail e enviaremos um token para alterar a senha.
+            </Text>
 
-            <Formik validationSchema={validations} initialValues={{}} onSubmit={(values) => sendEmail(values)}>
-              {({ handleChange, handleBlur, handleSubmit, values, errors,  }) => (
+            <Formik
+              validationSchema={validations}
+              initialValues={{}}
+              onSubmit={(values) => sendEmail(values)}
+            >
+              {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                 <View style={styles.form}>
                   <View style={styles.descWrap}>
                     <Text style={styles.formDesc}>E-mail*</Text>
@@ -91,16 +99,19 @@ export default function ForgotPassword() {
                       placeholder="E-mail"
                       keyboardType="email-address"
                     />
-                    {errors.email &&
-                    <Text style={{ fontSize: 15, color: 'red' }}>{errors.email}</Text>
-                    }
+                    {errors.email && (
+                      <Text style={{ fontSize: 15, color: "red" }}>
+                        {errors.email}
+                      </Text>
+                    )}
                   </View>
                   <TouchableOpacity
-                  activeOpacity={0.75}
+                    activeOpacity={0.75}
                     style={styles.loginBtn}
-                    onPress={handleSubmit}>
-                      <Text style={styles.btnText}>Enviar</Text>
-                      </TouchableOpacity>
+                    onPress={handleSubmit}
+                  >
+                    <Text style={styles.btnText}>Enviar</Text>
+                  </TouchableOpacity>
                 </View>
               )}
             </Formik>
@@ -129,7 +140,7 @@ const styles = StyleSheet.create({
   },
 
   imageSection: {
-    height: 420,
+    height: 450,
     backgroundColor: bgAzul,
     justifyContent: "center",
     alignItems: "center",
@@ -139,6 +150,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
+    marginTop: 20,
   },
 
   title: {
@@ -151,21 +163,22 @@ const styles = StyleSheet.create({
   },
 
   desc: {
-      width: 350,
+    width: 350,
     justifyContent: "center",
     alignItems: "center",
     color: txBranco,
   },
 
   loginImage: {
-    height: 240,
-    width: 240,
+    height: 250,
+    width: 250,
   },
 
   formSection: {
-    height: 400,
+    height: 420,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: txBranco,
   },
 
   formTitle: {
@@ -176,9 +189,9 @@ const styles = StyleSheet.create({
   },
 
   formMessage: {
-      width: 320,
+    width: 320,
     fontSize: 17,
-    padding: 10
+    padding: 10,
   },
 
   form: {
@@ -196,8 +209,7 @@ const styles = StyleSheet.create({
   formDesc: {
     fontSize: 20,
     fontFamily: "BoldFont",
-    marginBottom: 10
-
+    marginBottom: 10,
   },
 
   input: {
@@ -208,6 +220,15 @@ const styles = StyleSheet.create({
     backgroundColor: bgCinza,
     borderRadius: 15,
     padding: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
 
   passwordLink: {
@@ -220,18 +241,18 @@ const styles = StyleSheet.create({
 
   loginBtn: {
     justifyContent: "center",
-    alignContent: "flex-end",
+    alignContent: "center",
     flexDirection: "row",
     width: 100,
     height: 45,
     backgroundColor: btnAzul,
     borderRadius: 15,
     padding: 10,
-    marginTop: 15
+    marginTop: 20,
   },
 
   btnText: {
-    fontSize: 15,
+    fontSize: 18,
     fontFamily: "BoldFont",
     color: txBranco,
   },

@@ -106,39 +106,52 @@ export default function AddSkills() {
               Adicione uma habilidade no seu catálogo
             </Text>
 
-            <Picker
-              selectedValue={skillType}
-              style={styles.selector}
-              onValueChange={(itemValue, itemIndex) => setSkillType(itemValue)}
-            >
-              <Picker.Item label="Front-End" value="Front-End" />
-              <Picker.Item label="Back-End" value="Back-End" />
-              <Picker.Item label="Banco de Dados" value="Database" />
-              <Picker.Item label="DevOps" value="DevOps" />
-            </Picker>
+            <View style={styles.selectorWrap}>
+              <Text style={styles.title}>Tipo</Text>
+              <Picker
+                selectedValue={skillType}
+                style={styles.selector}
+                onValueChange={(itemValue, itemIndex) =>
+                  setSkillType(itemValue)
+                }
+              >
+                <Picker.Item label="" value="" />
+                <Picker.Item label="Front-End" value="Front-End" />
+                <Picker.Item label="Back-End" value="Back-End" />
+                <Picker.Item label="Banco de Dados" value="Database" />
+                <Picker.Item label="DevOps" value="DevOps" />
+              </Picker>
+            </View>
 
-            <Picker
-              selectedValue={skillSelected}
-              style={styles.selector}
-              onValueChange={(itemValue, itemIndex) =>
-                setSkillSelected(itemValue)
-              }
-            >
-              {skillOptions()}
-            </Picker>
+            <View style={styles.selectorWrap}>
+              <Text style={styles.title}>Habilidade</Text>
+              <Picker
+                selectedValue={skillSelected}
+                style={styles.selector}
+                onValueChange={(itemValue, itemIndex) =>
+                  setSkillSelected(itemValue)
+                }
+              >
+                {skillOptions()}
+              </Picker>
+            </View>
 
-            <Picker
-              selectedValue={selectedLevel}
-              style={styles.selector}
-              onValueChange={(itemValue, itemIndex) =>
-                setSelectedLevel(itemValue)
-              }
-            >
-              <Picker.Item label="Básico" value="Básico" />
-              <Picker.Item label="Intermediário" value="Intermediário" />
-              <Picker.Item label="Avançado" value="Avançado" />
-              <Picker.Item label="Especialista" value="Especialista" />
-            </Picker>
+            <View style={styles.selectorWrap}>
+              <Text style={styles.title}>Nível</Text>
+              <Picker
+                selectedValue={selectedLevel}
+                style={styles.selector}
+                onValueChange={(itemValue, itemIndex) =>
+                  setSelectedLevel(itemValue)
+                }
+              >
+                <Picker.Item label="" value="" />
+                <Picker.Item label="Básico" value="Básico" />
+                <Picker.Item label="Intermediário" value="Intermediário" />
+                <Picker.Item label="Avançado" value="Avançado" />
+                <Picker.Item label="Especialista" value="Especialista" />
+              </Picker>
+            </View>
 
             <View style={styles.btnWrap}>
               <TouchableOpacity
@@ -182,7 +195,7 @@ const styles = StyleSheet.create({
   },
 
   formSection: {
-    height: 550,
+    height: 650,
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: txCinza,
@@ -217,6 +230,18 @@ const styles = StyleSheet.create({
     color: txCinzaEscuro,
   },
 
+  selectorWrap: {
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+  },
+
+  title: {
+    fontSize: 20,
+    fontFamily: "BoldFont",
+    textAlign: "left",
+    color: txCinzaEscuro,
+  },
+
   selector: {
     width: 320,
     height: 60,
@@ -224,8 +249,8 @@ const styles = StyleSheet.create({
     fontFamily: "RegularFont",
     backgroundColor: txBranco,
     padding: 20,
-    marginTop: 20,
-    marginBottom: 20,
+    marginTop: 10,
+    marginBottom: 30,
     color: txCinzaEscuro,
   },
 
@@ -245,7 +270,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 20,
+    marginTop: 10,
   },
 
   addBtn: {

@@ -2,22 +2,31 @@ import React from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native'
 import { btnAmarelo, btnAzul, txBranco, txCinzaEscuro } from '../UI/variaveis';
 import { useAuth } from "../../contexts/auth";
+import { useNavigation } from "@react-navigation/core";
 import axios from 'axios';
 
 export default function EditProjectsCards({ id, name, manager, startDate, conclusionDate, skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8}) {
   
   const { user_id } = useAuth();
-  
+  const navigation = useNavigation();
 
-  function removeProject() {
+  const removeProject = (projectID) => {
 
-    console.log()
+    console.log(projectID)
 
     Alert.alert(
       "Remover Projeto",
       "Deseja remover esse projeto?",
       [
-        { text: "OK", onPress: () => {console.log()}      
+        { text: "OK", onPress: () => {
+          axios.delete(
+            `http://192.168.2.125:5000/user/remove_project/${user_id}/${projectID}`
+          );
+          Alert.alert(
+            "Projeto removido!", "",
+            [{ text: "OK", onPress: () => {navigation.push("AllProjects")}}]
+          )
+        }      
       },
         {
           text: "Cancelar",
@@ -30,7 +39,11 @@ export default function EditProjectsCards({ id, name, manager, startDate, conclu
   
 
     return (
-        <TouchableOpacity onPress={removeProject()} 
+        <TouchableOpacity  onPress={()=>{ 
+          const projectID = id;
+          removeProject(projectID);
+        
+        }}
         activeOpacity={0.5} style={styles.projectCard}>
             <View style={styles.wrap}>
             <Image source={require("../../assets/project-3.png")} style={styles.image} />
@@ -38,7 +51,6 @@ export default function EditProjectsCards({ id, name, manager, startDate, conclu
             <Text style={styles.info}>Gestor: {manager}</Text>
             <Text style={styles.info}>Data de Início: {startDate}</Text>
             <Text style={styles.info}> Data de Conclusão: {conclusionDate}</Text>
-            <Text style={styles.info}> ID: {id}</Text>
             <Text style={styles.info}>Skills:</Text>
             <View style={styles.skillsWrap}>
             {skill1 === null ? null : <View style={styles.skillTag}><Text style={styles.skill}>{skill1}</Text></View>}
