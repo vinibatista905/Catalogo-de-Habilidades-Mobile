@@ -138,8 +138,8 @@ function Login() {
             </View>
           </View>
         </View>
-      </ScrollView>
       {loading === true ? <Loader /> : null}
+      </ScrollView>
     </>
   );
 }
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   },
 
   formSection: {
-    height: 530,
+    height: 520,
     justifyContent: "center",
     alignItems: "center",
   },

@@ -10,7 +10,7 @@ const AuthContext = createContext({
   user_id: "",
   login: (values) => {},
   logOut: () => {},
-  loading: false
+  loading: false,
 });
 
 export const AuthProvider = ({ children }) => {
@@ -19,7 +19,6 @@ export const AuthProvider = ({ children }) => {
   const [userID, setUserID] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [notValidData, setNotValidData] = useState(false);
-
 
   const login = async (values) => {
     console.log(values);
@@ -39,23 +38,32 @@ export const AuthProvider = ({ children }) => {
           await AsyncStorage.setItem("user_id", stringID);
         }
       })
-        .catch((err) => {
-          Alert.alert(
-            "Dados incorretos!",
-            "E-mail e senha devem ser válidos.",
-            [{ text: "OK", onPress: () => console.log("Ok") }]
-          );
-        });
+      .catch((err) => {
+        Alert.alert("Dados incorretos!", "E-mail e senha devem ser válidos.", [
+          { text: "OK", onPress: () => console.log("Ok") },
+        ]);
+      });
   };
 
   const logOut = async () => {
-
-    await AsyncStorage.clear();
-    setAuth(false);
-    setToken("");
-    setUserID("");
-
-  }
+    Alert.alert("Encerrar Sessão", "Deseja encerrar essa sessão?", [
+      {
+        text: "OK",
+        onPress: async () => {
+          await AsyncStorage.clear();
+          setAuth(false);
+          setToken("");
+          setUserID("");
+          setIsLoading(false);
+        },
+      },
+      {
+        text: "Cancelar",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+    ]);
+  };
 
   useEffect(() => {
     getIsLogged();
@@ -73,7 +81,15 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ logged: auth, setLogged: setAuth, auth_token: token, user_id: userID, login, loading: isLoading, logOut }}
+      value={{
+        logged: auth,
+        setLogged: setAuth,
+        auth_token: token,
+        user_id: userID,
+        login,
+        loading: isLoading,
+        logOut,
+      }}
     >
       {children}
     </AuthContext.Provider>
