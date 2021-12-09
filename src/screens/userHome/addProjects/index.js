@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/core";
 import Header from "../../../components/header";
 import { useAuth } from "../../../contexts/auth";
+import { Picker } from "@react-native-picker/picker";
 
 import {
   Image,
