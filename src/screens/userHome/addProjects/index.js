@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Formik } from "formik";
+import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/core";
 import Header from "../../../components/header";
 import { useAuth } from "../../../contexts/auth";
@@ -10,7 +10,6 @@ import {
   Text,
   View,
   StyleSheet,
-  TextInput,
   ScrollView,
   TouchableOpacity,
   Alert,
@@ -29,9 +28,26 @@ export default function AddProjects() {
   const navigation = useNavigation();
   const { user_id } = useAuth();
 
-  const addNewProject = async (values) => {
+  // REQ PARA RECEBER TODOS OS PROJETOS
+  const [allProjects, setAllProjects] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://192.168.2.125:5000/user/all_projects")
+      .then(({ data }) => {
+        setAllProjects(data);
+
+        // eslint-disable-next-line
+      });
+  }, []);
+
+  // STATE PARA GUARDAR O PROJETO SELECIONADO
+  const [projectSelected, setProjectSelected] = useState(null);
+
+  // SUBMIT DO PROJETO
+  const addNewProject = async () => {
     const data = {
-      name: values.name,
+      name: projectSelected,
       id: user_id,
     };
     console.log(data);
@@ -64,44 +80,41 @@ export default function AddProjects() {
               Adicione projetos que você já participou
             </Text>
 
-            <Formik
-              initialValues={{}}
-              onSubmit={(values) => addNewProject(values)}
+            <Picker
+              selectedValue={projectSelected}
+              style={styles.selector}
+              onValueChange={(itemValue, itemIndex) =>
+                setProjectSelected(itemValue)
+              }
             >
-              {({ handleChange, handleBlur, handleSubmit, values }) => (
-                <View style={styles.form}>
-                  <View style={styles.descWrap}>
-                    <Text style={styles.formDesc}>Projeto</Text>
-                    <TextInput
-                      style={styles.input}
-                      onChangeText={handleChange("name")}
-                      onBlur={handleBlur("name")}
-                      value={values.name}
-                      placeholder="Projeto"
-                      keyboardType="default"
-                    />
-                  </View>
+              {allProjects.map((project) => {
+                return (
+                  <Picker.Item
+                    key={project.id}
+                    label={project.name}
+                    value={project.name}
+                  />
+                );
+              })}
+            </Picker>
 
-                  <View style={styles.btnWrap}>
-                    <TouchableOpacity
-                      activeOpacity={0.75}
-                      style={styles.addBtn}
-                      onPress={handleSubmit}
-                    >
-                      <Text style={styles.btnText1}>Adicionar</Text>
-                    </TouchableOpacity>
+            <View style={styles.btnWrap}>
+              <TouchableOpacity
+                activeOpacity={0.75}
+                style={styles.addBtn}
+                onPress={addNewProject}
+              >
+                <Text style={styles.btnText1}>Adicionar</Text>
+              </TouchableOpacity>
 
-                    <TouchableOpacity
-                      activeOpacity={0.75}
-                      style={styles.checkBtn}
-                      onPress={() => navigation.push("AllProjects")}
-                    >
-                      <Text style={styles.btnText2}>Ver Projetos</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              )}
-            </Formik>
+              <TouchableOpacity
+                activeOpacity={0.75}
+                style={styles.checkBtn}
+                onPress={() => navigation.push("AllProjects")}
+              >
+                <Text style={styles.btnText2}>Ver Projetos</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -128,7 +141,7 @@ const styles = StyleSheet.create({
 
   formSection: {
     height: 400,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: txCinza,
   },
@@ -139,39 +152,20 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontFamily: "BoldFont",
     textAlign: "center",
-    marginBottom: 10,
+    marginVertical: 20,
     color: txCinzaEscuro,
   },
 
-  form: {
-    justifyContent: "center",
-    alignItems: "flex-start",
-    padding: 35,
-  },
-
-  descWrap: {
-    justifyContent: "center",
-    alignItems: "flex-start",
-    padding: 10,
-  },
-
-  formDesc: {
-    fontSize: 20,
-    fontFamily: "BoldFont",
-    marginBottom: 10,
-    color: txCinzaEscuro,
-  },
-
-  input: {
+  selector: {
     width: 320,
     height: 60,
-    fontSize: 20,
+    fontSize: 30,
     fontFamily: "RegularFont",
     backgroundColor: txBranco,
-    borderColor: btnAmarelo,
-    borderWidth: 2,
-    borderRadius: 15,
-    padding: 10,
+    padding: 20,
+    marginTop: 20,
+    marginBottom: 20,
+    color: txCinzaEscuro
   },
 
   btnWrap: {
