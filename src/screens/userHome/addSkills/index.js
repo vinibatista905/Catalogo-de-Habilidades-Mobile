@@ -254,18 +254,6 @@ const styles = StyleSheet.create({
     color: txCinzaEscuro,
   },
 
-  input: {
-    width: 320,
-    height: 60,
-    fontSize: 20,
-    fontFamily: "RegularFont",
-    backgroundColor: txBranco,
-    borderRadius: 15,
-    borderWidth: 2,
-    borderColor: btnAmarelo,
-    padding: 10,
-  },
-
   btnWrap: {
     flexDirection: "row",
     justifyContent: "center",

@@ -56,8 +56,8 @@ export default function AllSkills() {
           </View>
 
           <View style={styles.btnWrap}>
-            <TouchableOpacity
-              activeOpacity={0.75}
+          <TouchableOpacity
+              activeOpacity={0.5}
               style={styles.btn1}
               onPress={() => navigation.push("AddProjects")}
             >
@@ -65,7 +65,7 @@ export default function AllSkills() {
             </TouchableOpacity>
 
             <TouchableOpacity
-              activeOpacity={0.75}
+              activeOpacity={0.5}
               style={styles.btn2}
               onPress={() => navigation.push("EditProjects")}
             >
@@ -108,59 +108,45 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  projectCard: {
-    width: 200,
-    height: 100,
-    backgroundColor: txBranco,
-    borderRadius: 12,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
   btnWrap: {
-    flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
-    paddingTop: 20,
-    backgroundColor: bgCinza,
-
+    flexDirection: "row",
+    width: 260,
+    marginTop: 30
   },
 
   btn1: {
     justifyContent: "center",
-    alignContent: "flex-end",
-    flexDirection: "row",
-    width: 100,
-    height: 45,
+    alignContent: "center",
+    width: 120,
+    height: 50,
     backgroundColor: btnAzul,
     borderRadius: 15,
-    padding: 10,
     marginTop: 15,
-    marginRight: 20,
+    
   },
 
   btn2: {
     justifyContent: "center",
-    alignContent: "flex-end",
-    flexDirection: "row",
-    width: 100,
-    height: 45,
+    alignContent: "center",
+    width: 120,
+    height: 50,
     backgroundColor: btnAmarelo,
     borderRadius: 15,
-    padding: 10,
     marginTop: 15,
-    marginRight: 20,
+    
   },
 
   btnText1: {
-    fontSize: 15,
+    fontSize: 18,
     fontFamily: "BoldFont",
     color: txBranco,
     textAlign: "center",
   },
 
   btnText2: {
-    fontSize: 15,
+    fontSize: 18,
     fontFamily: "BoldFont",
     color: txPreto,
     textAlign: "center",

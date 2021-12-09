@@ -15,7 +15,7 @@ import { useAuth } from "../../../contexts/auth";
 
 
 
-export default function AllSkills() {
+export default function EditSkills() {
 
   const navigation = useNavigation();
 
@@ -27,8 +27,6 @@ export default function AllSkills() {
       .get(`http://192.168.2.125:5000/user/check_skill/${user_id}`)
       .then(({ data }) => {
         setUserSkills(data);
-        console.log(data);
-
         // eslint-disable-next-line
       });
   }, []);
@@ -42,7 +40,6 @@ export default function AllSkills() {
         <View style={styles.skillsSection}>
           <View style={styles.wrap}>
             <FlatList
-              numColumns={2}
               data={userSkills}
               renderItem={({ item }) => <UserEditSkills {...item} />}
               keyExtractor={(item) => item.id}
@@ -79,7 +76,7 @@ const styles = StyleSheet.create({
   title: {
     justifyContent: "center",
     alignItems: "center",
-    fontSize: 25,
+    fontSize: 28,
     fontFamily: "BoldFont",
     textAlign: "center",
     padding: 20,

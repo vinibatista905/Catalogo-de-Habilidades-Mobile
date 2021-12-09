@@ -38,8 +38,6 @@ export default function AllSkills() {
       .get(`http://192.168.2.125:5000/user/check_profile/${user_id}`)
       .then(({ data }) => {
         setUserProfile(data);
-        console.log(data);
-
         // eslint-disable-next-line
       });
   }, []);

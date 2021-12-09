@@ -1,141 +1,192 @@
-import React from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native'
-import { btnAmarelo, btnAzul, txBranco, txCinzaEscuro } from '../UI/variaveis';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
+import { btnAmarelo, btnAzul, txBranco, txCinzaEscuro } from "../UI/variaveis";
 import { useAuth } from "../../contexts/auth";
 import { useNavigation } from "@react-navigation/core";
-import axios from 'axios';
+import axios from "axios";
 
-export default function EditProjectsCards({ id, name, manager, startDate, conclusionDate, skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8}) {
-  
+export default function EditProjectsCards({
+  id,
+  name,
+  manager,
+  startDate,
+  conclusionDate,
+  skill1,
+  skill2,
+  skill3,
+  skill4,
+  skill5,
+  skill6,
+  skill7,
+  skill8,
+}) {
   const { user_id } = useAuth();
   const navigation = useNavigation();
 
   const removeProject = (projectID) => {
-
-    console.log(projectID)
-
-    Alert.alert(
-      "Remover Projeto",
-      "Deseja remover esse projeto?",
-      [
-        { text: "OK", onPress: () => {
+    Alert.alert("Remover Projeto", "Deseja remover esse projeto?", [
+      {
+        text: "OK",
+        onPress: () => {
           axios.delete(
             `http://192.168.2.125:5000/user/remove_project/${user_id}/${projectID}`
           );
-          Alert.alert(
-            "Projeto removido!", "",
-            [{ text: "OK", onPress: () => {navigation.push("AllProjects")}}]
-          )
-        }      
+          Alert.alert("Projeto removido!", "", [
+            {
+              text: "OK",
+              onPress: () => {
+                navigation.push("AllProjects");
+              },
+            },
+          ]);
+        },
       },
-        {
-          text: "Cancelar",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        }
-      ]
-    );
-    }
-  
+      {
+        text: "Cancelar",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+    ]);
+  };
 
-    return (
-        <TouchableOpacity  onPress={()=>{ 
-          const projectID = id;
-          removeProject(projectID);
-        
-        }}
-        activeOpacity={0.5} style={styles.projectCard}>
-            <View style={styles.wrap}>
-            <Image source={require("../../assets/project-3.png")} style={styles.image} />
-            <Text style={styles.projectName}>{name}</Text>
-            <Text style={styles.info}>Gestor: {manager}</Text>
-            <Text style={styles.info}>Data de Início: {startDate}</Text>
-            <Text style={styles.info}> Data de Conclusão: {conclusionDate}</Text>
-            <Text style={styles.info}>Skills:</Text>
-            <View style={styles.skillsWrap}>
-            {skill1 === null ? null : <View style={styles.skillTag}><Text style={styles.skill}>{skill1}</Text></View>}
-            {skill2 === null ? null : <View style={styles.skillTag}><Text style={styles.skill}>{skill2}</Text></View>}
-            {skill3 === null ? null : <View style={styles.skillTag}><Text style={styles.skill}>{skill3}</Text></View>}
-            {skill4 === null ? null : <View style={styles.skillTag}><Text style={styles.skill}>{skill4}</Text></View>}
-            {skill5 === null ? null : <View style={styles.skillTag}><Text style={styles.skill}>{skill5}</Text></View>}
-            {skill6 === null ? null : <View style={styles.skillTag}><Text style={styles.skill}>{skill6}</Text></View>}
-            {skill7 === null ? null : <View style={styles.skillTag}><Text style={styles.skill}>{skill7}</Text></View>}
-            {skill8 === null ? null : <View style={styles.skillTag}><Text style={styles.skill}>{skill8}</Text></View>}
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        const projectID = id;
+        removeProject(projectID);
+      }}
+      activeOpacity={0.5}
+      style={styles.projectCard}
+    >
+      <View style={styles.wrap}>
+        <Image
+          source={require("../../assets/project-3.png")}
+          style={styles.image}
+        />
+        <Text style={styles.projectName}>{name}</Text>
+        <Text style={styles.info}>Gestor: {manager}</Text>
+        <Text style={styles.info}>Data de Início: {startDate}</Text>
+        <Text style={styles.info}> Data de Conclusão: {conclusionDate}</Text>
+        <Text style={styles.info}>Skills:</Text>
+        <View style={styles.skillsWrap}>
+          {skill1 === null ? null : (
+            <View style={styles.skillTag}>
+              <Text style={styles.skill}>{skill1}</Text>
             </View>
+          )}
+          {skill2 === null ? null : (
+            <View style={styles.skillTag}>
+              <Text style={styles.skill}>{skill2}</Text>
             </View>
-        </TouchableOpacity>
-    )
+          )}
+          {skill3 === null ? null : (
+            <View style={styles.skillTag}>
+              <Text style={styles.skill}>{skill3}</Text>
+            </View>
+          )}
+          {skill4 === null ? null : (
+            <View style={styles.skillTag}>
+              <Text style={styles.skill}>{skill4}</Text>
+            </View>
+          )}
+          {skill5 === null ? null : (
+            <View style={styles.skillTag}>
+              <Text style={styles.skill}>{skill5}</Text>
+            </View>
+          )}
+          {skill6 === null ? null : (
+            <View style={styles.skillTag}>
+              <Text style={styles.skill}>{skill6}</Text>
+            </View>
+          )}
+          {skill7 === null ? null : (
+            <View style={styles.skillTag}>
+              <Text style={styles.skill}>{skill7}</Text>
+            </View>
+          )}
+          {skill8 === null ? null : (
+            <View style={styles.skillTag}>
+              <Text style={styles.skill}>{skill8}</Text>
+            </View>
+          )}
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
 }
 
 const styles = StyleSheet.create({
-    projectCard: {
-        width: 320,
-        height: 520,
-        backgroundColor: txBranco,
-        borderRadius: 12,
-        borderColor: btnAmarelo,
-        borderWidth: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        margin: 5,
-      },
+  projectCard: {
+    width: 320,
+    height: 520,
+    backgroundColor: txBranco,
+    borderRadius: 12,
+    borderColor: btnAmarelo,
+    borderWidth: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 5,
+  },
 
-      wrap: {
-        justifyContent: "center",
-        alignItems: "center",
-      },
+  wrap: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
 
-      image: {
-        width: 180,
-        height: 180
-      },
+  image: {
+    width: 180,
+    height: 180,
+  },
 
-      projectName: {
-        justifyContent: "center",
-        alignItems: "center",
-        fontSize: 30,
-        fontFamily: "BoldFont",
-        textAlign: "center",
-        color: btnAzul,
-        marginBottom: 20
-      }, 
+  projectName: {
+    justifyContent: "center",
+    alignItems: "center",
+    fontSize: 30,
+    fontFamily: "BoldFont",
+    textAlign: "center",
+    color: btnAzul,
+    marginBottom: 20,
+  },
 
-      info: {
-        justifyContent: "center",
-        alignItems: "center",
-        fontSize: 18,
-        fontFamily: "BoldFont",
-        textAlign: "left",
-        color: txCinzaEscuro,
-      },  
+  info: {
+    justifyContent: "center",
+    alignItems: "center",
+    fontSize: 18,
+    fontFamily: "BoldFont",
+    textAlign: "left",
+    color: txCinzaEscuro,
+  },
 
-      skillsWrap: {
-       flexDirection: 'row',
-       flexWrap: "wrap",
-       justifyContent: "center",
-        alignItems: "center",
-       
-      },  
+  skillsWrap: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 
+  skillTag: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: 70,
+    height: 45,
+    borderRadius: 15,
+    backgroundColor: btnAzul,
+    margin: 5,
+  },
 
-      skillTag: {
-        justifyContent: "center",
-        alignItems: "center",
-        width: 70,
-        height: 45,
-        borderRadius: 15,
-        backgroundColor: btnAzul,
-        margin: 5
-      },
-
-      skill: {
-        justifyContent: "center",
-        alignItems: "center",
-        fontSize: 12,
-        fontFamily: "BoldFont",
-        textAlign: "center",
-        color: txBranco
-      },
-    
-  });
-  
+  skill: {
+    justifyContent: "center",
+    alignItems: "center",
+    fontSize: 12,
+    fontFamily: "BoldFont",
+    textAlign: "center",
+    color: txBranco,
+  },
+});

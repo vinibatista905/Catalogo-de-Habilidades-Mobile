@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Header from "../../../../components/header";
 import { Formik } from "formik";
 import { useNavigation } from "@react-navigation/core";
 import { useAuth } from "../../../../contexts/auth";
+import { Picker } from "@react-native-picker/picker";
 
-import Header from "../../../../components/header";
 import {
   Image,
   Text,
@@ -35,18 +36,45 @@ export default function EditSpecSkill({ route }) {
 
   const editSkillID = JSON.stringify(skillId);
 
-  const updateSkill = (values) => {
+  // REQ PARA RECEBER TODAS AS HABILIDADES
+  const [allSkills, setAllSkills] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://192.168.2.125:5000/user/all_skills").then(({ data }) => {
+      setAllSkills(data);
+
+      // eslint-disable-next-line
+    });
+  }, []);
+
+  // STATE PARA GUARDAR A HABILIDADE SELECIONADA
+  const [skillSelected, setSkillSelected] = useState(null);
+
+  // STATE PARA GUARDAR O TIPO DA HABILIDADE
+  const [skillType, setSkillType] = useState(null);
+
+  // STATE PARA GUARDAR O NÍVEL DA HABILIDADE
+  const [selectedLevel, setSelectedLevel] = useState(null);
+
+  // LÓGICA PARA FILTRAR AS HABILIDADES
+  function skillOptions() {
+    return allSkills
+      .filter((skill) => skill.category === skillType)
+      .map((skill) => {
+        return (
+          <Picker.Item key={skill.id} label={skill.name} value={skill.name} />
+        );
+      });
+  }
+
+  const updateSkill = async () => {
     const updateData = {
-      name: values.skill,
-      level: values.level,
-      type: values.type,
+      name: skillSelected,
+      level: selectedLevel,
+      type: skillType,
       idUser: user_id,
     };
-    updateRequest(updateData);
-  };
 
-  const updateRequest = async (updateData) => {
-    console.log(updateData);
     await axios
       .put(
         `http://192.168.2.125:5000/user/update_skill/${editSkillID}`,
@@ -56,7 +84,7 @@ export default function EditSpecSkill({ route }) {
         const data = resp.data;
         if (data) {
           console.log(data);
-          Alert.alert("Habilidade Atualizada!", "Mensagem", [
+          Alert.alert("Habilidade Atualizada!", "", [
             { text: "OK", onPress: () => navigation.push("EditSkills") },
           ]);
         }
@@ -78,58 +106,63 @@ export default function EditSpecSkill({ route }) {
           <View style={styles.formSection}>
             <Text style={styles.formTitle}>Edite Sua Habilidade</Text>
 
-            <Formik
-              initialValues={{}}
-              onSubmit={(values) => updateSkill(values)}
-            >
-              {({ handleChange, handleBlur, handleSubmit, values }) => (
-                <View style={styles.form}>
-                  <View style={styles.descWrap}>
-                    <Text style={styles.formDesc}>Tipo</Text>
-                    <TextInput
-                      style={styles.input}
-                      onChangeText={handleChange("type")}
-                      onBlur={handleBlur("type")}
-                      value={values.type}
-                      placeholder="Ex: Front-End"
-                      keyboardType="default"
-                    />
-                  </View>
-                  <View style={styles.descWrap}>
-                    <Text style={styles.formDesc}>Habilidade</Text>
-                    <TextInput
-                      style={styles.input}
-                      onChangeText={handleChange("skill")}
-                      onBlur={handleBlur("skill")}
-                      value={values.skill}
-                      placeholder="Ex: CSS"
-                      keyboardType="default"
-                    />
-                  </View>
-                  <View style={styles.descWrap}>
-                    <Text style={styles.formDesc}>Nível</Text>
-                    <TextInput
-                      style={styles.input}
-                      onChangeText={handleChange("level")}
-                      onBlur={handleBlur("level")}
-                      value={values.level}
-                      placeholder="Ex: Básico"
-                      keyboardType="default"
-                    />
-                  </View>
+            <View style={styles.selectorWrap}>
+              <Text style={styles.title}>Tipo</Text>
+              <Picker
+                selectedValue={skillType}
+                style={styles.selector}
+                onValueChange={(itemValue, itemIndex) =>
+                  setSkillType(itemValue)
+                }
+              >
+                <Picker.Item label="" value="" />
+                <Picker.Item label="Front-End" value="Front-End" />
+                <Picker.Item label="Back-End" value="Back-End" />
+                <Picker.Item label="Banco de Dados" value="Database" />
+                <Picker.Item label="DevOps" value="DevOps" />
+              </Picker>
+            </View>
 
-                  <View style={styles.btnWrap}>
-                    <TouchableOpacity
-                      activeOpacity={0.75}
-                      style={styles.addBtn}
-                      onPress={handleSubmit}
-                    >
-                      <Text style={styles.btnText1}>Atualizar</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              )}
-            </Formik>
+            <View style={styles.selectorWrap}>
+              <Text style={styles.title}>Habilidade</Text>
+              <Picker
+                selectedValue={skillSelected}
+                style={styles.selector}
+                onValueChange={(itemValue, itemIndex) =>
+                  setSkillSelected(itemValue)
+                }
+              >
+                {skillOptions()}
+              </Picker>
+            </View>
+
+            <View style={styles.selectorWrap}>
+              <Text style={styles.title}>Nível</Text>
+              <Picker
+                selectedValue={selectedLevel}
+                style={styles.selector}
+                onValueChange={(itemValue, itemIndex) =>
+                  setSelectedLevel(itemValue)
+                }
+              >
+                <Picker.Item label="" value="" />
+                <Picker.Item label="Básico" value="Básico" />
+                <Picker.Item label="Intermediário" value="Intermediário" />
+                <Picker.Item label="Avançado" value="Avançado" />
+                <Picker.Item label="Especialista" value="Especialista" />
+              </Picker>
+            </View>
+
+            <View style={styles.btnWrap}>
+              <TouchableOpacity
+                activeOpacity={0.75}
+                style={styles.addBtn}
+                onPress={updateSkill}
+              >
+                <Text style={styles.btnText1}>Atualizar</Text>
+              </TouchableOpacity>
+            </View>
+
           </View>
         </View>
       </ScrollView>
@@ -150,13 +183,13 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    height: 300,
-    width: 300,
+    height: 350,
+    width: 350,
   },
 
   formSection: {
-    height: 600,
-    justifyContent: "center",
+    height: 580,
+    justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: txCinza,
   },
@@ -164,11 +197,12 @@ const styles = StyleSheet.create({
   formTitle: {
     justifyContent: "center",
     alignItems: "center",
-    fontSize: 25,
+    fontSize: 30,
     fontFamily: "BoldFont",
     textAlign: "center",
     padding: 20,
     color: txCinzaEscuro,
+    marginBottom: 10
   },
 
   form: {
@@ -177,36 +211,34 @@ const styles = StyleSheet.create({
     padding: 5,
   },
 
-  descWrap: {
-    justifyContent: "center",
+  selectorWrap: {
+    justifyContent: "flex-start",
     alignItems: "flex-start",
-    padding: 10,
   },
 
-  formDesc: {
+  title: {
     fontSize: 20,
     fontFamily: "BoldFont",
-    marginBottom: 10,
+    textAlign: "left",
     color: txCinzaEscuro,
   },
 
-  input: {
+  selector: {
     width: 320,
     height: 60,
-    fontSize: 20,
+    fontSize: 30,
     fontFamily: "RegularFont",
     backgroundColor: txBranco,
-    borderRadius: 15,
-    padding: 10,
-    borderWidth: 2,
-    borderColor: btnAmarelo,
+    padding: 20,
+    marginTop: 10,
+    marginBottom: 30,
+    color: txCinzaEscuro,
   },
 
   btnWrap: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 20,
   },
 
   addBtn: {
