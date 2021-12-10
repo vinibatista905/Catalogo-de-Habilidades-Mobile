@@ -55,6 +55,13 @@ function ResetPassword() {
             [{ text: "OK", onPress: () => navigation.push("Login") }]
           );
         }
+      })
+      .catch((err) => {
+        Alert.alert(
+          "Dados Inválidos!",
+          "E-mail ou token incorretos.",
+          [{ text: "OK", onPress: () => console.log("Ok") }]
+        );
       });
   };
 
