@@ -54,6 +54,7 @@ export default function AllSkills() {
               keyExtractor={(item) => item.id}
             />
           </View>
+            </View>
 
           <View style={styles.btnWrap}>
           <TouchableOpacity
@@ -72,7 +73,6 @@ export default function AllSkills() {
               <Text style={styles.btnText2}>Editar</Text>
             </TouchableOpacity>
           </View>
-        </View>
       </View>
     </>
   );
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     fontFamily: "BoldFont",
     textAlign: "center",
     padding: 20,
-    marginBottom: 40,
+  
     color: txCinzaEscuro,
   },
 
@@ -113,7 +113,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     width: 260,
-    marginTop: 30
+    marginTop: 20,
+    marginLeft: 80 
   },
 
   btn1: {

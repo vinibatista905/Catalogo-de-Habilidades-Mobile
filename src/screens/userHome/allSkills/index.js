@@ -96,7 +96,9 @@ export default function AllSkills() {
             />
           </View>
 
+            </View>
           <View style={styles.btnWrap}>
+            
             <TouchableOpacity
               activeOpacity={0.75}
               style={styles.btn1}
@@ -104,6 +106,7 @@ export default function AllSkills() {
             >
               <Text style={styles.btnText1}>Adicionar</Text>
             </TouchableOpacity>
+
             <TouchableOpacity
               activeOpacity={0.75}
               style={styles.btn2}
@@ -112,7 +115,6 @@ export default function AllSkills() {
               <Text style={styles.btnText2}>Editar</Text>
             </TouchableOpacity>
           </View>
-        </View>
       </View>
     </>
   );
@@ -157,7 +159,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderColor: btnAzul,
     borderWidth: 2,
-    marginBottom: 20,
     marginRight: 10,
   },
 
